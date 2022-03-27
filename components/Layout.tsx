@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Footer from "./Footer";
 import Header from "./Header";
 
 export const Layout = memo(({children}) => {
@@ -8,6 +9,7 @@ export const Layout = memo(({children}) => {
         <main>
             {children}
         </main>
+        <Footer />
         </>
     );
 });
