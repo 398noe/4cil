@@ -1,23 +1,70 @@
-import { memo } from "react";
+import { ReactNode } from 'react';
+import {
+    Box,
+    chakra,
+    Container,
+    Stack,
+    Text,
+    useColorModeValue,
+    VisuallyHidden,
+} from '@chakra-ui/react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { Container } from "react-bootstrap";
 
-export const Footer = memo(() => {
+const SocialButton = ({
+    children,
+    label,
+    href,
+}: {
+    children: ReactNode;
+    label: string;
+    href: string;
+}) => {
     return (
-        <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 mt-4 bg-light">
-            <Container>
-                <div className="col-md-12 d-flex">
-                    <span className="col-md-10 text-muted">4 Character Internet License Project by 398noe © 2022 All Rights Reserved</span>
-                    <ul className="col-md-2 list-unstyled mb-0 d-flex justify-content-end">
-                        <li className="ms-3"><a className="text-muted" href="#"><FontAwesomeIcon icon={faGithub} /></a></li>
-                        <li className="ms-3"><a className="text-muted" href="#"><FontAwesomeIcon icon={faTwitter} /></a></li>
-                    </ul>
-                </div>
-
-            </Container>
-        </footer>
+        <chakra.button
+            bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+            rounded={'full'}
+            w={8}
+            h={8}
+            cursor={'pointer'}
+            as={'a'}
+            href={href}
+            display={'inline-flex'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            transition={'background 0.3s ease'}
+            _hover={{
+                bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
+            }}>
+            <VisuallyHidden>{label}</VisuallyHidden>
+            {children}
+        </chakra.button>
     );
-});
+};
 
-export default Footer;
+export default function SmallWithSocial() {
+    return (
+        <Box
+            bg={useColorModeValue('gray.50', 'gray.900')}
+            color={useColorModeValue('gray.700', 'gray.200')}>
+            <Container
+                as={Stack}
+                maxW={'6xl'}
+                py={4}
+                direction={{ base: 'column', md: 'row' }}
+                spacing={4}
+                justify={{ base: 'center', md: 'space-between' }}
+                align={{ base: 'center', md: 'center' }}>
+                <Text>4 Character Internet License Project © 2022<br/>All rights reserved by @398noe</Text>
+                <Stack direction={'row'} spacing={6}>
+                    <SocialButton label={'GitHub'} href={'https://github.com/398noe/4cil'}>
+                        <FontAwesomeIcon icon={faGithub} />
+                    </SocialButton>
+                    <SocialButton label={'Twitter'} href={'https://twitter.com/398noetan'}>
+                        <FontAwesomeIcon icon={faTwitter} />
+                    </SocialButton>
+                </Stack>
+            </Container>
+        </Box>
+    );
+}

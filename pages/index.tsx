@@ -1,152 +1,228 @@
-import type { NextPage } from 'next'
+import type { NextPage } from "next"
+import {
+    Box,
+    Button,
+    ButtonGroup,
+    Center,
+    Container,
+    Flex,
+    FormControl,
+    FormHelperText,
+    FormLabel,
+    Heading,
+    Icon,
+    IconButton,
+    Input,
+    InputGroup,
+    InputLeftAddon,
+    InputRightElement,
+    Link,
+    Select,
+    Show,
+    SimpleGrid,
+    Stack,
+    Table,
+    TableCaption,
+    TableContainer,
+    Tbody,
+    Td,
+    Text,
+    Tfoot,
+    Th,
+    Thead,
+    Tr,
+    useBreakpointValue,
+    useColorModeValue,
+} from "@chakra-ui/react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faArrowPointer, faUniversalAccess, faShareNodes } from "@fortawesome/free-solid-svg-icons";
-import { Col, Container, Form, Row, InputGroup, FormControl, Button } from 'react-bootstrap';
-import Link from 'next/link';
+import { faMagnifyingGlass, faArrowPointer, faUniversalAccess, faShareNodes, faLink } from "@fortawesome/free-solid-svg-icons";
+import { ReactElement } from "react";
+import { AddIcon } from "@chakra-ui/icons";
+
+
+interface FeatureProps {
+    title: string;
+    text: string;
+    icon: ReactElement;
+}
+
 
 const Home: NextPage = () => {
     return (
         <>
-            <div className="bg-light py-5">
-                <div className="p-5">
-                    <h1 className="display-2 fw-bold lh-1 mb-3">最強の、四文字属性。</h1>
-                    <h2 className="display-5 lh-1 mb-3">4 Character Internet License</h2>
-                    <p className="lead">4CILは著作物の利用規約をすぐに意思表明できるサービスです</p>
-                    <div className="d-grid gap-2 d-md-flex justify-content-md-start mt-5">
-                        <button type="button" className="btn btn-primary btn-lg px-4 me-md-2">使ってみる <FontAwesomeIcon icon={faArrowPointer} /></button>
-                        <button type="button" className="btn btn-success btn-lg px-4">ライセンス一覧 <FontAwesomeIcon icon={faMagnifyingGlass} /></button>
-                    </div>
-                </div>
-            </div>
-            <Container className="py-5" id="about">
-                <h1 className="border-bottom mb-4">About</h1>
-                <h2 className="h3">4CILは著作物の利用規約をすぐに意思表明できるサービスです</h2>
-                <p>著作物の利用規約は各サイトによって様々であり、利用者は各サイトの利用規約をサイトごとに確認する必要があります。また、利用規約を書く側にとっては、他サイトの文を参考に長い利用規約を記す必要があります。4CILは、そのような手間を減らすべく、リンクを貼ることで簡単に著作物の利用規約、特にその著作物の利用と加工改変、再配布に関する意思表明ができるお手伝いをします</p>
-                <Row className="g-4 py-5 row-cols-1 row-cols-lg-3">
-                    <Col className="feature d-flex flex-column align-items-center">
-                        <div className="feature-icon p-4" >
-                            <FontAwesomeIcon icon={faUniversalAccess} size="8x" className="text-primary" />
-                        </div>
-                        <h2>4文字のチカラ</h2>
-                        <p>4文字のチカラはとっても強大！<br />例えば君が「icl1」と発言するだけで、「私の書いたイラスト、無断使用しないで！」という意思表明ができるよ！</p>
-                    </Col>
-                    <Col className="feature d-flex flex-column align-items-center">
-                        <div className="feature-icon p-4">
-                            <FontAwesomeIcon icon={faShareNodes} size="8x" className="text-success" />
-                        </div>
-                        <h2>見やすいライセンス</h2>
-                        <p>4CILはOGPに対応！TwitterやFacebook, Discordなどにリンクを貼ると、君の意思表明が画像になってみんなにすぐ見えるようになるよ！</p>
-                    </Col>
-                    <Col className="feature d-flex flex-column align-items-center">
-                        <div className="feature-icon p-4">
-                            <FontAwesomeIcon icon={faMagnifyingGlass} size="8x" />
-                        </div>
-                        <h2>分かりやすいリンク</h2>
-                        <p>4CILのURL形式はとてもシンプル！<Link href={"/"}>https://4cil.ga/</Link>のあとに「非商用を示す"n"と許可するレベル」「商用を示す"c"と許可するレベル」で表すだけ！<br />例えば<Link href={"/n7c7"}>https://4cil.ga/n7c7</Link>みたいな感じ！</p>
-                    </Col>
-                </Row>
+            <Stack minH={"60vh"} direction={{ base: "column", md: "row" }} bg={useColorModeValue('gray.50', 'gray.900')}>
+                <Flex px={8} pt={20} pb={8} flex={1} align={"center"}>
+                    <Stack spacing={6} w={"full"} maxW={"max"}>
+                        <Text as="h1" fontSize={["5xl", "7xl"]} fontWeight={700}>最強の、<Show below="sm"><br /></Show>四文字属性。</Text>
+                        <Text as="h2" fontSize={["2xl", "5xl"]} fontWeight={400}>4 Character Internet License</Text>
+                        <Text fontSize={"xl"} color={"gray.500"}>
+                            4CILは著作物の利用規約をすぐに意思表明できるサービスです
+                        </Text>
+                        <Stack direction={{ base: "column", md: "row" }} spacing={4}>
+                            <Button
+                                bg={"blue.400"}
+                                color={"white"}
+                                size={"lg"}
+                                _hover={{
+                                    bg: "blue.500",
+                                }}>
+                                <Text pr={2}>使ってみる</Text>
+                                <FontAwesomeIcon icon={faArrowPointer} />
+                            </Button>
+                            <Button
+                                bg={"green.400"}
+                                color={"white"}
+                                size={"lg"}
+                                _hover={{
+                                    bg: "green.500",
+                                }}>
+                                <Text pr={2}>ライセンス一覧</Text>
+                                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                            </Button>
+                        </Stack>
+                    </Stack>
+                </Flex>
+            </Stack>
+            <Container maxW={"container.lg"} p={8}>
+                <Text as={"span"} fontSize={["4xl", "5xl"]} fontWeight={700}>About</Text>
+                <Text as={"h2"} fontSize={["2xl"]} pb={8}>4CILは著作物の利用規約をすぐに意思表明できるサービスです</Text>
+                <Text color={"gray.500"}>著作物の利用規約は各サイトによって様々であり、利用者は各サイトの利用規約をサイトごとに確認する必要があります。また、利用規約を書く側にとっては、他サイトの文を参考に長い利用規約を記す必要があります。4CILは、そのような手間を減らすべく、リンクを貼ることで簡単に著作物の利用規約、特にその著作物の利用と加工改変、再配布に関する意思表明ができるお手伝いをします</Text>
             </Container>
-            <Container className="py-5" id="howto">
-                <h1 className="border-bottom mb-4">How to use</h1>
-                <p>以下の項目を許可するか許可しないか選ぶことで、簡単にリンクを生成できます</p>
-                <Form>
-                    <Row className="row-cols-3">
-                        <Col></Col>
-                        <Col><p>非商用利用</p></Col>
-                        <Col><p>商用利用</p></Col>
-                        <Col><p>素材の利用</p></Col>
-                        <Col>
-
-                            <Form.Select>
-                                <option value="o">許可します</option>
-                                <option value="x">許可しません</option>
-                            </Form.Select>
-
-                        </Col>
-                        <Col>
-
-                            <Form.Select>
-                                <option value="o">許可します</option>
-                                <option value="x">許可しません</option>
-                            </Form.Select>
-
-                        </Col>
-                        <Col><p>素材の加工・改変</p></Col>
-                        <Col>
-
-                            <Form.Select>
-                                <option value="o">許可します</option>
-                                <option value="x">許可しません</option>
-                            </Form.Select>
-
-                        </Col>
-                        <Col>
-
-                            <Form.Select>
-                                <option value="o">許可します</option>
-                                <option value="x">許可しません</option>
-                            </Form.Select>
-
-                        </Col>
-                        <Col><p>素材の再配布</p></Col>
-                        <Col>
-
-                            <Form.Select>
-                                <option value="o">許可します</option>
-                                <option value="x">許可しません</option>
-                            </Form.Select>
-
-                        </Col>
-                        <Col>
-
-                            <Form.Select>
-                                <option value="o">許可します</option>
-                                <option value="x">許可しません</option>
-                            </Form.Select>
-
-                        </Col>
-                        <Col><p>クレジット表記</p></Col>
-                        <Col>
-
-                            <Form.Select>
-                                <option value="oo">利用・再配布どちらも必要です</option>
-                                <option value="ox">再配布に限り必要です</option>
-                                <option value="xx">不要です</option>
-                            </Form.Select>
-
-                        </Col>
-                        <Col>
-                            <Form.Select>
-                                <option value="oo">利用・再配布どちらも必要です</option>
-                                <option value="ox">再配布に限り必要です</option>
-                                <option value="xx">不要です</option>
-                            </Form.Select>
-                        </Col>
-                    </Row>
-                </Form>
-                <h2>貼り付けるリンク</h2>
-                <p>以下のリンクを素材のライセンス先のリンクに貼り付けてください</p>
-                <Form>
-                    <InputGroup className="mb-3">
-                        <InputGroup.Text id="basic-addon3">
-                            https://4cil.ga/
-                        </InputGroup.Text>
-                        <FormControl id="generated-url" defaultValue={"n5c5"} />
-                        <Button variant="success">
-                            COPY
-                        </Button>
+            <Container maxW={"container.lg"} p={8}>
+                <Text as={"span"} fontSize={["4xl", "5xl"]} fontWeight={700}>Features</Text>
+                <Text as={"h2"} fontSize={["2xl"]} pb={8}>4CILは以下の特徴を持っています</Text>
+                <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
+                    <Feature
+                        icon={<Text color="blue.500" ><FontAwesomeIcon icon={faUniversalAccess} size="8x" /></Text>}
+                        title={"4文字のチカラ"}
+                        text={
+                            "4CILはライセンスの種類を4文字で表します。例えば「N7C7」を選ぶことで、非商用・商用問わず、素材の使用・加工改変・再配布を許可、クレジット表記不要と意思表明することができます"
+                        }
+                    />
+                    <Feature
+                        icon={<Text color="green.500"><FontAwesomeIcon icon={faShareNodes} size="8x" /></Text>}
+                        title={"見やすいライセンス"}
+                        text={
+                            "4CILはOGPに対応しています。TwitterやFacebook・DiscordなどOGPに対応したWebサービスにリンクを貼ることで、リンクが画像として表示され、ライセンス内容を素早く表示することが可能です"
+                        }
+                    />
+                    <Feature
+                        icon={<Text color="yellow.400"><FontAwesomeIcon icon={faLink} size="8x" /></Text>}
+                        title={"素材ごとにリンク可能"}
+                        text={
+                            "4CILはライセンスの種類をURLで提供します。これによって、従来の利用規約よりも柔軟に、素材ごとにライセンスの種類を意思表明することができます"
+                        }
+                    />
+                </SimpleGrid>
+            </Container>
+            <Container maxW={"container.lg"} p={8}>
+                <Text as={"span"} fontSize={["4xl", "5xl"]} fontWeight={700}>Let's TRY</Text>
+                <Text as={"h2"} fontSize={["2xl"]} pb={8}>以下の選択肢を選ぶだけで簡単にリンクを生成できます</Text>
+                <Container>
+                    <SimpleGrid columns={3} spacing={2} alignItems={"center"}>
+                        <Text></Text>
+                        <Text textAlign={"center"}>非商用利用</Text>
+                        <Text textAlign={"center"}>商用利用</Text>
+                        <Text>利用</Text>
+                        <FormControl>
+                            <Select id="n-use">
+                                <option value="o">許可する</option>
+                                <option value="x">許可しない</option>
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <Select id="c-use">
+                                <option value="o">許可する</option>
+                                <option value="x">許可しない</option>
+                            </Select>
+                        </FormControl>
+                        <Text>加工改変</Text>
+                        <FormControl>
+                            <Select id="n-edit">
+                                <option value="o">許可する</option>
+                                <option value="x">許可しない</option>
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <Select id="c-edit">
+                                <option value="o">許可する</option>
+                                <option value="x">許可しない</option>
+                            </Select>
+                        </FormControl>
+                        <Text>再配布</Text>
+                        <FormControl>
+                            <Select id="n-distribute">
+                                <option value="o">許可する</option>
+                                <option value="x">許可しない</option>
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <Select id="c-distribute">
+                                <option value="o">許可する</option>
+                                <option value="x">許可しない</option>
+                            </Select>
+                        </FormControl>
+                        <Text>クレジット表記</Text>
+                        <FormControl>
+                            <Select id="n-credit">
+                                <option value="oo">必要</option>
+                                <option value="ox">再配布のみ必要</option>
+                                <option value="xx">不要</option>
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <Select id="c-credit">
+                                <option value="oo">必要</option>
+                                <option value="ox">再配布のみ必要</option>
+                                <option value="xx">不要</option>
+                            </Select>
+                        </FormControl>
+                    </SimpleGrid>
+                </Container>
+                <Text as={"h2"} fontSize={["2xl"]} pt={8} pb={2}>以下のリンクを素材のライセンス先のリンクに貼り付けてください</Text>
+                <FormControl>
+                    <InputGroup>
+                    <InputLeftAddon children="https://4cil.ga/" />
+                        <Input
+                            pr="4.5rem"
+                            type={"text"}
+                            placeholder="n5c5"
+                        />
+                        <InputRightElement width='4.5rem'>
+                            <Button h="1.75rem" size="sm"
+                                _hover={{
+                                    bg: "green.500",
+                                }}>
+                                COPY
+                            </Button>
+                        </InputRightElement>
                     </InputGroup>
-                </Form>
-                <h3>ライセンスの例</h3>
-                <ul>
-                    <li>見るだけにして！使ったりしちゃだめ！ → https://4cil.ga/n0c0</li>
-                    <li>動画共有サイトで使う素材にしていいよ！クレジット表記はつけてね！ → https://4cil.ga/n3c3</li>
-                    <li>非商用目的ならWeb記事で自由に使っていいよ！クレジット表記もいらないよ！商用目的では使わないでね！ → https://4cil.ga/n4c0</li>
-                    <li>何しても大丈夫！パブリックドメイン！ → https://4cil.ga/n7c7</li>
-                </ul>
+                </FormControl>
             </Container>
+
         </>
     );
 }
+
+const Feature = ({ title, text, icon }: FeatureProps) => {
+    return (
+        <Stack
+            align={"center"}>
+            <Flex
+                w={32}
+                h={32}
+                align={"center"}
+                justify={"center"}
+                color={"white"}
+                rounded={"full"}
+                mb={1}>
+                {icon}
+            </Flex>
+            <Text fontSize={"2xl"} fontWeight={600}>{title}</Text>
+            <Text fontSize={"base"} color={"gray.600"}>{text}</Text>
+        </Stack>
+    );
+};
 
 export default Home
