@@ -8,24 +8,21 @@ export const Header = memo(() => {
                 <Container>
                     <Navbar.Brand
                         className="mx-4"
-                        href="#home">
+                        href="/">
                         4CIL
                     </Navbar.Brand>
-                    <Navbar.Toggle/>
+                    <Navbar.Toggle />
                     <Navbar.Collapse>
                         <Nav
                             className="me-auto gap-2"
                             navbarScroll
                         >
-                            <Nav.Link>Home</Nav.Link>
-                            <Nav.Link>About</Nav.Link>
-                            <Nav.Link>HowTo</Nav.Link>
+                            <Nav.Link href="#home">Home</Nav.Link>
+                            <Nav.Link href="#about">About</Nav.Link>
+                            <Nav.Link href="#howto">How To</Nav.Link>
                             <NavDropdown title="License">
-                                <NavDropdown.Item>Illust</NavDropdown.Item>
-                                <NavDropdown.Item>Audio</NavDropdown.Item>
-                                <NavDropdown.Item>Video</NavDropdown.Item>
-                                <NavDropdown.Item>3D Model</NavDropdown.Item>
-                                <NavDropdown.Item>Novel</NavDropdown.Item>
+                                <NavDropdown.Item>非商用利用向け</NavDropdown.Item>
+                                <NavDropdown.Item>商用利用向け</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                         <Nav className="gap-2">

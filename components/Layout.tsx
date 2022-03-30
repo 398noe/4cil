@@ -2,14 +2,14 @@ import { memo } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 
-export const Layout = memo(({children}) => {
+export const Layout = memo(({ children }) => {
     return (
         <>
-        <Header />
-        <main>
-            {children}
-        </main>
-        <Footer />
+            <Header />
+            <main>
+                {children}
+            </main>
+            <Footer />
         </>
     );
 });
