@@ -1,38 +1,55 @@
-import { memo } from "react";
-import { Navbar, Nav, NavDropdown, Container, Button } from "react-bootstrap";
+import { ReactNode } from 'react';
+import NextLink from "next/link";
+import {
+    Box,
+    Flex,
+    Text,
+    Link,
+    Button,
+    useDisclosure,
+    useColorModeValue,
+    Stack,
+    useColorMode,
+} from '@chakra-ui/react';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-export const Header = memo(() => {
+const NavLink = ({ children }: { children: ReactNode }) => (
+    <Link
+        px={2}
+        py={1}
+        rounded={'md'}
+        _hover={{
+            textDecoration: 'none',
+            bg: useColorModeValue('white', 'gray.700'),
+        }}
+        href={'#'}>
+        {children}
+    </Link>
+);
+
+export default function Header() {
+    const { colorMode, toggleColorMode } = useColorMode();
     return (
-        <>
-            <Navbar collapseOnSelect fixed="top" expand="sm" bg="dark" variant="dark" className="navbar-expand-lg">
-                <Container>
-                    <Navbar.Brand
-                        className="mx-4"
-                        href="/">
-                        4CIL
-                    </Navbar.Brand>
-                    <Navbar.Toggle />
-                    <Navbar.Collapse>
-                        <Nav
-                            className="me-auto gap-2"
-                            navbarScroll
-                        >
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#about">About</Nav.Link>
-                            <Nav.Link href="#howto">How To</Nav.Link>
-                            <NavDropdown title="License">
-                                <NavDropdown.Item>非商用利用向け</NavDropdown.Item>
-                                <NavDropdown.Item>商用利用向け</NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
-                        <Nav className="gap-2">
-                            <Button variant="primary">Go GitHub</Button>{' '}
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-        </>
-    );
-});
+        <Box pos="fixed" zIndex={100} w="full" bg={useColorModeValue('white', 'gray.900')}>
+            <Flex h={16} px={4} alignItems={'center'} justifyContent={'space-between'}
+                borderBottom={1}
+                borderStyle={'solid'}
+                borderColor={useColorModeValue('gray.200', 'gray.800')}>
+                <Box px={2}><NextLink href="/" passHref><Button as="a" variant="ghost"><Text fontSize={24} fontWeight={700}>4CIL</Text></Button></NextLink></Box>
 
-export default Header;
+                <Flex alignItems={'center'}>
+                    <Stack direction={'row'} spacing={2}>
+                        <Button variant="ghost"><FontAwesomeIcon icon={faMagnifyingGlass} /></Button>
+                        <Button variant="ghost"><FontAwesomeIcon icon={faGithub} /></Button>
+                        <Button onClick={toggleColorMode} variant="ghost">
+                            {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+                        </Button>
+                    </Stack>
+                </Flex>
+            </Flex>
+        </Box>
+    );
+}
