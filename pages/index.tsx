@@ -1,44 +1,25 @@
 import type { NextPage } from "next"
 import {
-    Box,
     Button,
-    ButtonGroup,
-    Center,
     Container,
     Flex,
     FormControl,
-    FormHelperText,
-    FormLabel,
-    Heading,
-    Icon,
-    IconButton,
     Input,
     InputGroup,
     InputLeftAddon,
     InputRightElement,
-    Link,
     Select,
     Show,
     SimpleGrid,
     Stack,
-    Table,
-    TableCaption,
-    TableContainer,
-    Tbody,
-    Td,
     Text,
-    Tfoot,
-    Th,
-    Thead,
-    Tr,
-    useBreakpointValue,
     useColorModeValue,
 } from "@chakra-ui/react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faArrowPointer, faUniversalAccess, faShareNodes, faLink } from "@fortawesome/free-solid-svg-icons";
 import { ReactElement } from "react";
-import { AddIcon } from "@chakra-ui/icons";
+import LinkBox from "../components/LinkBox";
 
 
 interface FeatureProps {
@@ -181,24 +162,7 @@ const Home: NextPage = () => {
                     </SimpleGrid>
                 </Container>
                 <Text as={"h2"} fontSize={["2xl"]} pt={8} pb={2}>以下のリンクを素材のライセンス先のリンクに貼り付けてください</Text>
-                <FormControl>
-                    <InputGroup>
-                    <InputLeftAddon children="https://4cil.ga/" />
-                        <Input
-                            pr="4.5rem"
-                            type={"text"}
-                            placeholder="n5c5"
-                        />
-                        <InputRightElement width='4.5rem'>
-                            <Button h="1.75rem" size="sm"
-                                _hover={{
-                                    bg: "green.500",
-                                }}>
-                                COPY
-                            </Button>
-                        </InputRightElement>
-                    </InputGroup>
-                </FormControl>
+                <LinkBox url="n5c5"/>
             </Container>
 
         </>
