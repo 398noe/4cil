@@ -1,13 +1,57 @@
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router';
+import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid, Button, FormControl, Input, InputGroup, InputLeftAddon, InputRightElement } from '@chakra-ui/react';
+import LinkBox from '../components/LinkBox';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
-import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid, Button, FormControl, Input, InputGroup, InputLeftAddon, InputRightElement } from '@chakra-ui/react';
-import LinkBox from '../components/LinkBox';
+import { useEffect, useState } from 'react';
+import Error from 'next/error';
+
+type Level = [number, number];
+
+const splitNC = (str: string) => {
+    const handleStr = str + "xxxx";
+    return [handleStr.slice(0, 2), handleStr.slice(2, 4)];
+}
+const splitLevel = (str: string) => {
+    return Number(str.slice(1, 2));
+}
 
 const License: NextPage = () => {
+    const router = useRouter();
+    const { level_id } = router.query;
+    const regex = new RegExp("n[0-7]c[0-7]");
+    const [level, setLevel] = useState<Level>([0, 0]);
+
+    /**
+     * URL Check
+     */
+    useEffect(() => {
+        if(router.isReady) {
+            const link: string = (level_id + "xxxx").slice(0,4);
+            console.log(level_id);
+            console.log(link);
+            
+            // リンクが正常なら
+            if (urlCheck(link, regex)) {
+                console.log("URL is OK.");
+                setLevel([Number(link.slice(1, 2)), Number(link.slice(3, 4))]);
+            } else {
+                // リンクが間違っているなら
+                console.log("URL is NG.");
+                router.replace("/404");
+            }
+        }
+    }, [level_id, router]);
+
+    const urlCheck = (str: string, regex: RegExp) => {
+        return regex.test(str);
+    }
+
     return (
         <>
+
             <Box textAlign="center" pt={24} pb={8} px={6}>
                 <Heading as="h2" size="xl" mt={6} mb={2}>
                     N5C3ライセンス
@@ -50,7 +94,7 @@ const License: NextPage = () => {
             <Container maxW={"container.lg"} p={8}>
                 <Text as={"span"} fontSize={["2xl", "3xl"]} fontWeight={700}>このライセンスを使用したい！</Text>
                 <Text as={"h2"} pt={8} pb={2}>以下のリンクを素材のライセンス先のリンクに貼り付けてください</Text>
-                <LinkBox url="n5n3"/>
+                <LinkBox url="n5n3" />
             </Container>
         </>
     );
