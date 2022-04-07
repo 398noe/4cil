@@ -19,7 +19,6 @@ interface LevelProps {
 const Level: NextPage<LevelProps> = ({ licenses, level }) => {
     return (
         <>
-
             <Box textAlign="center" pt={24} pb={8} px={6}>
                 <Heading as="h2" size="xl" mt={6} mb={2}>
                     N{level[0]}C{level[1]}ライセンス
@@ -31,55 +30,37 @@ const Level: NextPage<LevelProps> = ({ licenses, level }) => {
             <Divider color={useColorModeValue("gray.200", "gray.800")} />
             <Container maxW={"container.lg"} p={8}>
                 <Text as={"span"} fontSize={["2xl", "3xl"]} fontWeight={700}>説明</Text>
-                <Text as={"h2"} py={4}>このライセンスを持つ素材は、非商用利用目的での
-                    {
-                        licenses.filter((license => license.level == level[0])).map((data) => {
-                            return data.description;
-                        })
-                    }
-                </Text>
-                <Text as={"h2"} pb={4}>このライセンスを持つ素材は、商用利用目的での
-                    {
-                        licenses.filter((license => license.level == level[1])).map((data) => {
-                            return data.description;
-                        })
-                    }
-                </Text>
+                <Text as={"h2"} py={4}>このライセンスを持つ素材は、非商用利用目的での{licenses[0].description}</Text>
+                <Text as={"h2"} pb={4}>このライセンスを持つ素材は、商用利用目的での{licenses[1].description}</Text>
             </Container>
             <Container maxW={"container.lg"} p={8}>
                 <SimpleGrid columns={3} spacing={2} alignItems={"center"}>
                     <Box />
                     <Text color="blue.500" textAlign="center"><FontAwesomeIcon icon={faCircle} size="6x" /></Text>
                     <Text color="red.500" textAlign="center"><FontAwesomeIcon icon={faXmark} size="6x" /></Text>
+                </SimpleGrid>
+                <SimpleGrid columns={3} spacing={2} alignItems={"center"}>
                     <Box />
                     <Text textAlign={"center"}>許可されるもの</Text>
                     <Text textAlign={"center"}>許可されないもの</Text>
-                    <Text>非商用利用</Text>
-                    <Box>
-                        {
-                            licenses.filter((license => license.level == level[0])).map((data) => {
-                                // get permission
-                            })
-                        }
-                        <Text>素材の利用・加工改変・再配布</Text>
-                        <Text>利用・再配布いずれもクレジット表記が必要</Text>
-                    </Box>
-                    <Box></Box>
-                    <Text>商用利用</Text>
-                    <Box>
-                        <Text>素材の利用・加工改変</Text>
-                        <Text>利用にあたってクレジット表記は不要</Text>
-                    </Box>
-                    <Box>
-                        <Text>素材の再配布</Text>
-                    </Box>
                 </SimpleGrid>
+                {
+                    licenses.map((data, index) => {
+                        return (
+                            <SimpleGrid key={index} columns={3} spacing={2} alignItems={"center"}>
+                                <Text>{index === 0 ? "非" : ""}商用利用</Text>
+                                <Text>{data.allow}</Text>
+                                <Text>{data.disallow}</Text>
+                            </SimpleGrid>
+                        );
+                    })
+                }
             </Container>
             <Divider color={useColorModeValue("gray.200", "gray.800")} />
             <Container maxW={"container.lg"} p={8}>
                 <Text as={"span"} fontSize={["2xl", "3xl"]} fontWeight={700}>このライセンスを使用したい！</Text>
                 <Text as={"h2"} pt={8} pb={2}>以下のリンクを素材のライセンス先のリンクに貼り付けてください</Text>
-                <LinkBox url="n5n3" />
+                <LinkBox url="n5c3" />
             </Container>
         </>
     );
@@ -105,25 +86,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     // Licenses データを再構築
     let licenses: LicenseItems = [];
-    licensesRes.body.data.filter((data => data.attributes.level == level[0] || data.attributes.level == level[1])).map((data) => {
-        licenses.push({
-            description: data.attributes.description,
-            level: data.attributes.level,
-            allow: data.attributes.allow,
-            disallow: data.attributes.disallow
+    for (let i = 0; i < level.length; i++) {
+        licensesRes.body.data.filter((data => data.attributes.level == level[i])).map((data) => {
+            licenses.push({
+                description: data.attributes.description,
+                level: data.attributes.level,
+                allow: data.attributes.allow,
+                disallow: data.attributes.disallow
+            });
         });
-    });
-    /*
-    licensesRes.body.data.map((data) => {
-        licenses.push({
-            description: data.attributes.description,
-            level: data.attributes.level,
-            allow: data.attributes.allow,
-            disallow: data.attributes.disallow
-        });
-    });
-    */
-
+    }
     return {
         props: {
             licenses, level
