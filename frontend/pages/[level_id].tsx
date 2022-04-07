@@ -1,7 +1,7 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from 'next/router';
 import { apiClient } from "../utils/apiClient";
-import { LicenseItems } from "../api/licenses";
+import { LicenseItem, LicenseItems, LicensesAttributes } from "../api/licenses";
 import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid } from '@chakra-ui/react';
 import LinkBox from '../components/LinkBox';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,31 +13,10 @@ import { urlCheck } from "../utils/urlCheck";
 type Level = [number, number];
 interface LevelProps {
     licenses: LicenseItems;
+    level: Level;
 };
 
-const Level: NextPage<LevelProps> = ({ licenses }) => {
-    const router = useRouter();
-    const { level_id } = router.query;
-    const regex = new RegExp("n[0-7]c[0-7]");
-    const [level, setLevel] = useState<Level>([0, 0]);
-    /**
-     * URL Check
-     */
-    useEffect(() => {
-        if (router.isReady) {
-            const link: string = (level_id + "xxxx").slice(0, 4);
-            // if url is correct
-            if (urlCheck(link, regex)) {
-                console.log("URL is OK.");
-                setLevel([Number(link.slice(1, 2)), Number(link.slice(3, 4))]);
-            } else {
-                // if url is invalid
-                console.log("URL is NG.");
-                router.replace("/404");
-            }
-        }
-    }, [level_id, router]);
-
+const Level: NextPage<LevelProps> = ({ licenses, level }) => {
     return (
         <>
 
@@ -112,13 +91,29 @@ export default Level;
  * Get contents from strapi.
  * @returns license data
  */
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const link: string = (params?.level_id + "xxxx").slice(0, 4);
+    const regex = new RegExp("n[0-7]c[0-7]");
+    let level: Level = [0, 0];
+    // if url is correct
+    if (urlCheck(link, regex)) {
+        level = [Number(link.slice(1, 2)), Number(link.slice(3, 4))];
+    }
     const token = process.env.BEARER_TOKEN;
     // Access Strapi API
     const licensesRes = await apiClient.licenses.get({ headers: { Authorization: `Bearer ${token}` } });
 
     // Licenses データを再構築
     let licenses: LicenseItems = [];
+    licensesRes.body.data.filter((data => data.attributes.level == level[0] || data.attributes.level == level[1])).map((data) => {
+        licenses.push({
+            description: data.attributes.description,
+            level: data.attributes.level,
+            allow: data.attributes.allow,
+            disallow: data.attributes.disallow
+        });
+    });
+    /*
     licensesRes.body.data.map((data) => {
         licenses.push({
             description: data.attributes.description,
@@ -127,16 +122,16 @@ export const getStaticProps: GetStaticProps = async () => {
             disallow: data.attributes.disallow
         });
     });
+    */
 
     return {
         props: {
-            licenses
+            licenses, level
         }
     }
 }
 
 export const getStaticPaths: GetStaticPaths<{ level_id: string }> = async () => {
-    
     return {
         paths: [],
         fallback: "blocking"

@@ -9,8 +9,7 @@ export interface LicenseItem {
 
 export type LicenseItems = Array<LicenseItem>;
 
-
-interface LicensesAttributes extends StrapiAttributes {
+export interface LicensesAttributes extends StrapiAttributes {
     description: string;
     level: number;
     allow: string;
