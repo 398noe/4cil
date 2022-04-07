@@ -49,17 +49,6 @@ const Level: NextPage<LevelProps> = ({ words, licenses }) => {
         return regex.test(str);
     }
 
-    const buildDescription = (level: number, words: WordItems) => {
-        let result = "";
-        if (level <= 0) {
-            // 許可文なし
-        } else if (level > 5) {
-            // 禁止文なし
-        } else {
-
-        }
-    }
-
     return (
         <>
 
