@@ -70,7 +70,7 @@ const Level: NextPage<LevelProps> = ({ words, licenses }) => {
                         })
                     }
                 </Text>
-                <Text as={"h2"} pb={4}>このライセンスを持つ素材は、非商用利用目的での
+                <Text as={"h2"} pb={4}>このライセンスを持つ素材は、商用利用目的での
                     {
                         licenses.filter((license => license.level == level[1])).map((data) => {
                             return data.description;
@@ -88,6 +88,17 @@ const Level: NextPage<LevelProps> = ({ words, licenses }) => {
                     <Text textAlign={"center"}>許可されないもの</Text>
                     <Text>非商用利用</Text>
                     <Box>
+                        {
+                            licenses.filter((license => license.level == level[0])).map((data) => {
+                                // get permission
+                                const level = data.level;
+                                const permission = [data.permission.slice(0, 1), data.permission.slice(1, 2), data.permission.slice(2, 3), data.permission.slice(3, 5)];
+                                console.log(permission);
+                                if (data.level >= 1) {
+                                    
+                                }
+                            })
+                        }
                         <Text>素材の利用・加工改変・再配布</Text>
                         <Text>利用・再配布いずれもクレジット表記が必要</Text>
                     </Box>

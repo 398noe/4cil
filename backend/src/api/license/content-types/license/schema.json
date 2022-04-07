@@ -4,7 +4,8 @@
   "info": {
     "singularName": "license",
     "pluralName": "licenses",
-    "displayName": "license"
+    "displayName": "license",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -46,6 +47,22 @@
       "required": true,
       "maxLength": 5,
       "minLength": 5
+    },
+    "allowed": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "text"
+    },
+    "disallow": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "text"
     }
   }
 }
