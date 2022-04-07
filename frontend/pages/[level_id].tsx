@@ -1,14 +1,13 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from "next";
-import { useRouter } from 'next/router';
 import { apiClient } from "../utils/apiClient";
-import { LicenseItem, LicenseItems, LicensesAttributes } from "../api/licenses";
-import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid } from '@chakra-ui/react';
+import { urlCheck } from "../utils/urlCheck";
+import { LicenseItems } from "../api/licenses";
 import LinkBox from '../components/LinkBox';
+
+import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid } from '@chakra-ui/react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
-import { useEffect, useState } from 'react';
-import { urlCheck } from "../utils/urlCheck";
 
 type Level = [number, number];
 interface LevelProps {
@@ -79,6 +78,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     // if url is correct
     if (urlCheck(link, regex)) {
         level = [Number(link.slice(1, 2)), Number(link.slice(3, 4))];
+    } else {
+        return {
+            notFound: true
+        }
     }
     const token = process.env.BEARER_TOKEN;
     // Access Strapi API
