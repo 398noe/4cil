@@ -6,6 +6,8 @@ export interface LicenseItem {
     permission: string;
 }
 
+export type LicenseItems = Array<LicenseItem>;
+
 
 interface LicensesAttributes extends StrapiAttributes {
     description: string;

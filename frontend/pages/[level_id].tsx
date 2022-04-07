@@ -7,11 +7,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { useEffect, useState } from 'react';
-import { LicenseItem } from "../api/licenses";
+import { LicenseItems } from "../api/licenses";
+import { WordItems } from "../api/word";
 
 type Level = [number, number];
+interface LevelProps {
+    words: WordItems;
+    licenses: LicenseItems;
+};
 
-const Level: NextPage = () => {
+const Level: NextPage<LevelProps> = ({ words, licenses }) => {
     const router = useRouter();
     const { level_id } = router.query;
     const regex = new RegExp("n[0-7]c[0-7]");
@@ -25,9 +30,6 @@ const Level: NextPage = () => {
     useEffect(() => {
         if (router.isReady) {
             const link: string = (level_id + "xxxx").slice(0, 4);
-            console.log(level_id);
-            console.log(link);
-
             // if url is correct
             if (urlCheck(link, regex)) {
                 console.log("URL is OK.");
@@ -39,11 +41,23 @@ const Level: NextPage = () => {
             }
         }
         // fetch word and license data
-
+        console.log(words);
+        console.log(licenses);
     }, [level_id, router]);
 
     const urlCheck = (str: string, regex: RegExp) => {
         return regex.test(str);
+    }
+
+    const buildDescription = (level: number, words: WordItems) => {
+        let result = "";
+        if (level <= 0) {
+            // 許可文なし
+        } else if (level > 5) {
+            // 禁止文なし
+        } else {
+
+        }
     }
 
     return (
@@ -60,8 +74,20 @@ const Level: NextPage = () => {
             <Divider color={useColorModeValue("gray.200", "gray.800")} />
             <Container maxW={"container.lg"} p={8}>
                 <Text as={"span"} fontSize={["2xl", "3xl"]} fontWeight={700}>説明</Text>
-                <Text as={"h2"} py={4}>このライセンスを持つ素材は、非商用利用目的での素材の利用・加工改変・再配布が許可されます。素材の利用・再配布時にはともにクレジット表記が必要です</Text>
-                <Text as={"h2"} pb={4}>このライセンスを持つ素材は、商用利用目的での素材の利用・加工改変が許可されます。素材の再配布は許可されません。素材の利用にあたってクレジット表記は不要です</Text>
+                <Text as={"h2"} py={4}>このライセンスを持つ素材は、非商用利用目的での
+                    {
+                        licenses.filter((license => license.level == level[0])).map((data) => {
+                            return data.description;
+                        })
+                    }
+                </Text>
+                <Text as={"h2"} pb={4}>このライセンスを持つ素材は、非商用利用目的での
+                    {
+                        licenses.filter((license => license.level == level[1])).map((data) => {
+                            return data.description;
+                        })
+                    }
+                </Text>
             </Container>
             <Container maxW={"container.lg"} p={8}>
                 <SimpleGrid columns={3} spacing={2} alignItems={"center"}>
@@ -112,7 +138,7 @@ export const getStaticProps: GetStaticProps = async () => {
     // Words 定義を取得
     const words = wordRes.body.data.attributes.list;
     // Licenses データを再構築
-    let licenses: Array<LicenseItem> = [];
+    let licenses: LicenseItems = [];
     licensesRes.body.data.map((data) => {
         licenses.push({
             description: data.attributes.description,

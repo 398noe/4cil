@@ -1,6 +1,6 @@
 import { Strapi, StrapiAttributes, StrapiData } from "../types/strapi";
 
-type WordItems = {
+export type WordItems = {
     [key: string]: string;
 }
 
