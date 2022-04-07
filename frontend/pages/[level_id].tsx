@@ -24,12 +24,12 @@ const Level: NextPage = () => {
             console.log(level_id);
             console.log(link);
             
-            // リンクが正常なら
+            // if url is correct
             if (urlCheck(link, regex)) {
                 console.log("URL is OK.");
                 setLevel([Number(link.slice(1, 2)), Number(link.slice(3, 4))]);
             } else {
-                // リンクが間違っているなら
+            // if url is invalid
                 console.log("URL is NG.");
                 router.replace("/404");
             }
