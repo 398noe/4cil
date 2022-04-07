@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Button, Stack, Flex } from '@chakra-ui/react';
+import { Heading, Text, Button, Stack, Flex } from '@chakra-ui/react';
 
 export default function NotFound() {
     return (
@@ -8,7 +8,7 @@ export default function NotFound() {
                     display="inline-block"
                     as="h2"
                     size="2xl"
-                    bgGradient="linear(to-r, teal.400, teal.600)"
+                    bg="blue.400"
                     backgroundClip="text">
                     404
                 </Heading>
@@ -16,17 +16,16 @@ export default function NotFound() {
                     Page Not Found
                 </Text>
                 <Text color={'gray.500'} mb={6}>
-                    The page you're looking for does not seem to exist
+                    お探しのページは見つかりませんでした…
                 </Text>
 
                 <Button
-                    colorScheme="teal"
-                    bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
+                    bg="blue.400"
                     color="white"
                     variant="solid"
                     as="a"
                     href="/">
-                    Go to Home
+                    ホームに戻る
                 </Button>
             </Flex>
         </Stack>

@@ -1,12 +1,11 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router';
-import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid, Button, FormControl, Input, InputGroup, InputLeftAddon, InputRightElement } from '@chakra-ui/react';
+import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid } from '@chakra-ui/react';
 import LinkBox from '../components/LinkBox';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { useEffect, useState } from 'react';
-import Error from 'next/error';
 
 type Level = [number, number];
 
@@ -18,7 +17,7 @@ const splitLevel = (str: string) => {
     return Number(str.slice(1, 2));
 }
 
-const License: NextPage = () => {
+const Level: NextPage = () => {
     const router = useRouter();
     const { level_id } = router.query;
     const regex = new RegExp("n[0-7]c[0-7]");
@@ -98,6 +97,6 @@ const License: NextPage = () => {
             </Container>
         </>
     );
-}
+};
 
-export default License
+export default Level;
