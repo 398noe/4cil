@@ -3,7 +3,8 @@ import { StrapiAttributes, StrapiData, Strapis } from "../types/strapi";
 export interface LicenseItem {
     description: string;
     level: number;
-    permission: string;
+    allow: string;
+    disallow: string;
 }
 
 export type LicenseItems = Array<LicenseItem>;
@@ -12,7 +13,8 @@ export type LicenseItems = Array<LicenseItem>;
 interface LicensesAttributes extends StrapiAttributes {
     description: string;
     level: number;
-    permission: string;
+    allow: string;
+    disallow: string;
 }
 
 interface LicensesData extends StrapiData {

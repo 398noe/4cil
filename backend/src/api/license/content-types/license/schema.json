@@ -37,18 +37,7 @@
       "max": 7,
       "min": 0
     },
-    "permission": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "string",
-      "required": true,
-      "maxLength": 5,
-      "minLength": 5
-    },
-    "allowed": {
+    "allow": {
       "pluginOptions": {
         "i18n": {
           "localized": true

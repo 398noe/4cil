@@ -1,29 +1,25 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from 'next/router';
 import { apiClient } from "../utils/apiClient";
+import { LicenseItems } from "../api/licenses";
 import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid } from '@chakra-ui/react';
 import LinkBox from '../components/LinkBox';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { useEffect, useState } from 'react';
-import { LicenseItems } from "../api/licenses";
-import { WordItems } from "../api/word";
+import { urlCheck } from "../utils/urlCheck";
 
 type Level = [number, number];
 interface LevelProps {
-    words: WordItems;
     licenses: LicenseItems;
 };
 
-const Level: NextPage<LevelProps> = ({ words, licenses }) => {
+const Level: NextPage<LevelProps> = ({ licenses }) => {
     const router = useRouter();
     const { level_id } = router.query;
     const regex = new RegExp("n[0-7]c[0-7]");
     const [level, setLevel] = useState<Level>([0, 0]);
-    // Words
-    // license
-
     /**
      * URL Check
      */
@@ -40,14 +36,7 @@ const Level: NextPage<LevelProps> = ({ words, licenses }) => {
                 router.replace("/404");
             }
         }
-        // fetch word and license data
-        console.log(words);
-        console.log(licenses);
     }, [level_id, router]);
-
-    const urlCheck = (str: string, regex: RegExp) => {
-        return regex.test(str);
-    }
 
     return (
         <>
@@ -91,12 +80,6 @@ const Level: NextPage<LevelProps> = ({ words, licenses }) => {
                         {
                             licenses.filter((license => license.level == level[0])).map((data) => {
                                 // get permission
-                                const level = data.level;
-                                const permission = [data.permission.slice(0, 1), data.permission.slice(1, 2), data.permission.slice(2, 3), data.permission.slice(3, 5)];
-                                console.log(permission);
-                                if (data.level >= 1) {
-                                    
-                                }
                             })
                         }
                         <Text>素材の利用・加工改変・再配布</Text>
@@ -127,34 +110,33 @@ export default Level;
 
 /**
  * Get contents from strapi.
- * @returns words and license data
+ * @returns license data
  */
 export const getStaticProps: GetStaticProps = async () => {
     const token = process.env.BEARER_TOKEN;
     // Access Strapi API
-    const wordRes = await apiClient.word.get({ headers: { Authorization: `Bearer ${token}` } });
     const licensesRes = await apiClient.licenses.get({ headers: { Authorization: `Bearer ${token}` } });
 
-    // Words 定義を取得
-    const words = wordRes.body.data.attributes.list;
     // Licenses データを再構築
     let licenses: LicenseItems = [];
     licensesRes.body.data.map((data) => {
         licenses.push({
             description: data.attributes.description,
             level: data.attributes.level,
-            permission: data.attributes.permission
+            allow: data.attributes.allow,
+            disallow: data.attributes.disallow
         });
     });
 
     return {
         props: {
-            words, licenses
+            licenses
         }
     }
 }
 
 export const getStaticPaths: GetStaticPaths<{ level_id: string }> = async () => {
+    
     return {
         paths: [],
         fallback: "blocking"
