@@ -1,5 +1,6 @@
-import type { NextPage } from 'next'
+import type { NextPage, GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from 'next/router';
+import { apiClient } from "../utils/apiClient";
 import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid } from '@chakra-ui/react';
 import LinkBox from '../components/LinkBox';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,26 +15,30 @@ const Level: NextPage = () => {
     const { level_id } = router.query;
     const regex = new RegExp("n[0-7]c[0-7]");
     const [level, setLevel] = useState<Level>([0, 0]);
+    // Words
+    // license
 
     /**
      * URL Check
      */
     useEffect(() => {
-        if(router.isReady) {
-            const link: string = (level_id + "xxxx").slice(0,4);
+        if (router.isReady) {
+            const link: string = (level_id + "xxxx").slice(0, 4);
             console.log(level_id);
             console.log(link);
-            
+
             // if url is correct
             if (urlCheck(link, regex)) {
                 console.log("URL is OK.");
                 setLevel([Number(link.slice(1, 2)), Number(link.slice(3, 4))]);
             } else {
-            // if url is invalid
+                // if url is invalid
                 console.log("URL is NG.");
                 router.replace("/404");
             }
         }
+        // fetch word and license data
+
     }, [level_id, router]);
 
     const urlCheck = (str: string, regex: RegExp) => {
@@ -45,10 +50,10 @@ const Level: NextPage = () => {
 
             <Box textAlign="center" pt={24} pb={8} px={6}>
                 <Heading as="h2" size="xl" mt={6} mb={2}>
-                    N5C3ライセンス
+                    N{level[0]}C{level[1]}ライセンス
                 </Heading>
                 <Text color={'gray.500'}>
-                    非商用利用レベル5 : 商用利用レベル3
+                    非商用利用レベル{level[0]} : 商用利用レベル{level[1]}
                 </Text>
             </Box>
             <Divider color={useColorModeValue("gray.200", "gray.800")} />
@@ -92,3 +97,29 @@ const Level: NextPage = () => {
 };
 
 export default Level;
+
+/**
+ * Get contents from strapi.
+ * @returns words and license data
+ */
+export const getStaticProps: GetStaticProps = async () => {
+    const token = process.env.BEARER_TOKEN;
+    // Access Strapi API
+    const wordRes = await apiClient.word.get({ headers: { Authorization: `Bearer ${token}` } });
+    const licensesRes = await apiClient.licenses.get({ headers: { Authorization: `Bearer ${token}` } });
+    
+    console.log(wordRes.status);
+    
+    return {
+        props: {
+
+        }
+    }
+}
+
+export const getStaticPaths: GetStaticPaths<{level_id: string}> = async() => {
+    return {
+        paths: [],
+        fallback: "blocking"
+    }
+}

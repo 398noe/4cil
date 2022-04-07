@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "run-p dev:*",
+    "dev:next": "next dev",
+    "dev:aspida": "aspida --watch",
+    "build": "aspida && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "api:build": "aspida"
   },
   "dependencies": {
     "@aspida/axios": "^1.9.1",
@@ -32,6 +35,7 @@
     "eslint": "8.12.0",
     "eslint-config-next": "12.1.1",
     "sass": "^1.49.9",
-    "typescript": "4.6.3"
+    "typescript": "4.6.3",
+    "yarn-run-all": "^3.1.1"
   }
 }
