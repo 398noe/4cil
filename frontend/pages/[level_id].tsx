@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { useEffect, useState } from 'react';
+import { LicenseItem } from "../api/licenses";
 
 type Level = [number, number];
 
@@ -107,17 +108,27 @@ export const getStaticProps: GetStaticProps = async () => {
     // Access Strapi API
     const wordRes = await apiClient.word.get({ headers: { Authorization: `Bearer ${token}` } });
     const licensesRes = await apiClient.licenses.get({ headers: { Authorization: `Bearer ${token}` } });
-    
-    console.log(wordRes.status);
-    
+
+    // Words 定義を取得
+    const words = wordRes.body.data.attributes.list;
+    // Licenses データを再構築
+    let licenses: Array<LicenseItem> = [];
+    licensesRes.body.data.map((data) => {
+        licenses.push({
+            description: data.attributes.description,
+            level: data.attributes.level,
+            permission: data.attributes.permission
+        });
+    });
+
     return {
         props: {
-
+            words, licenses
         }
     }
 }
 
-export const getStaticPaths: GetStaticPaths<{level_id: string}> = async() => {
+export const getStaticPaths: GetStaticPaths<{ level_id: string }> = async () => {
     return {
         paths: [],
         fallback: "blocking"
