@@ -9,14 +9,6 @@ import { useEffect, useState } from 'react';
 
 type Level = [number, number];
 
-const splitNC = (str: string) => {
-    const handleStr = str + "xxxx";
-    return [handleStr.slice(0, 2), handleStr.slice(2, 4)];
-}
-const splitLevel = (str: string) => {
-    return Number(str.slice(1, 2));
-}
-
 const Level: NextPage = () => {
     const router = useRouter();
     const { level_id } = router.query;
