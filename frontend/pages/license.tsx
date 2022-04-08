@@ -39,12 +39,16 @@ const License: NextPage = () => {
                 <Text as={"h2"} pb={4}>数字は0から7を指定することができ、それぞれ以下の意味を示します</Text>
             </Container>
             <Container maxW={"container.lg"} p={8}>
+                <Text>ここに表を展開</Text>
+            </Container>
+            <Container>
+                <Text>ここにレベル選択とそのライセンスに飛ぶことのできるURL生成器を作成</Text>
             </Container>
             <Divider color={useColorModeValue("gray.200", "gray.800")} />
             <Container maxW={"container.lg"} p={8}>
                 <Text as={"span"} fontSize={["2xl", "3xl"]} fontWeight={700}>このライセンスを使用したい！</Text>
                 <Text as={"h2"} pt={8} pb={2}>以下のリンクを素材のライセンス先のリンクに貼り付けてください</Text>
-                <LinkBox url="n5n3" />
+                <LinkBox path="/n5n3" />
             </Container>
         </>
     );

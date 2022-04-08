@@ -59,7 +59,7 @@ const Level: NextPage<LevelProps> = ({ licenses, level }) => {
             <Container maxW={"container.lg"} p={8}>
                 <Text as={"span"} fontSize={["2xl", "3xl"]} fontWeight={700}>このライセンスを使用したい！</Text>
                 <Text as={"h2"} pt={8} pb={2}>以下のリンクを素材のライセンス先のリンクに貼り付けてください</Text>
-                <LinkBox url="n5c3" />
+                <LinkBox path={"/n" + level[0] + "c" + level[1]} />
             </Container>
         </>
     );

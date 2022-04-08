@@ -1,47 +1,37 @@
-import { FormControl, InputGroup, InputLeftAddon, Input, InputRightElement, Button, useColorModeValue } from "@chakra-ui/react";
+import { FormControl, InputGroup, InputLeftAddon, Input, InputRightElement, Button, useColorModeValue, useClipboard } from "@chakra-ui/react";
 import React, { useState } from "react";
 
 interface LinkBoxProps {
-    url: string;
+    path: string;
 }
 
-export const LinkBox: React.FC<LinkBoxProps> = ({ url }) => {
-    const [copyStatus, setCopyStatus] = useState(false);
-    const urlPrefix : string = "https://4cil.ga/";
+export const LinkBox: React.FC<LinkBoxProps> = ({ path }) => {
+    const urlPrefix: string = (process.env.NEXT_PUBLIC_APP_URL == undefined ? "https://4cil.ga" : process.env.NEXT_PUBLIC_APP_URL);
 
-    const handleCopyStatus = ((text: string) => {
-
-        navigator.clipboard.writeText(text)
-            .then(() => {
-                console.log("License URL has copied!");
-            }, (err) => {
-                console.error("Something error has occured: ", err);
-            });
-        if (!copyStatus) {
-            setCopyStatus(true);
-        }
-    });
+    const [url, setUrl] = useState(urlPrefix + path);
+    const { hasCopied, onCopy } = useClipboard(url);
 
     return (
         <FormControl>
             <InputGroup>
-                <InputLeftAddon children={urlPrefix} />
                 <Input
                     pr="4.5rem"
                     type={"text"}
+                    isReadOnly
                     placeholder={url}
+                    _placeholder={{color: useColorModeValue("black","white")}}
                 />
                 <InputRightElement width='6rem' px={2}>
                     <Button h="1.75rem" size="sm"
-                        bg={copyStatus ? "green.400" : useColorModeValue("gray.100", "gray.700")}
-                        color={copyStatus ? "white" : ""}
+                        bg={hasCopied ? "green.400" : useColorModeValue("gray.100", "gray.700")}
+                        color={hasCopied ? "white" : ""}
                         _hover={{
                             bg: "green.500",
                             color: "white"
                         }}
-                        onClick={() => handleCopyStatus(urlPrefix + url)}
+                        onClick={onCopy}
                     >
-                        {copyStatus ? "COPIED!" : "COPY"}
+                        {hasCopied ? "COPIED!" : "COPY"}
                     </Button>
                 </InputRightElement>
             </InputGroup>

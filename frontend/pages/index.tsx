@@ -160,11 +160,11 @@ const Home: NextPage = () => {
                             </Select>
                         </FormControl>
                     </SimpleGrid>
+                    <Text>ここに選択肢をもとにレベルを作成するジェネレータを用意</Text>
                 </Container>
                 <Text as={"h2"} fontSize={["2xl"]} pt={8} pb={2}>以下のリンクを素材のライセンス先のリンクに貼り付けてください</Text>
-                <LinkBox url="n5c5"/>
+                <LinkBox path="/n5c5"/>
             </Container>
-
         </>
     );
 }
