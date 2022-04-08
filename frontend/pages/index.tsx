@@ -1,14 +1,10 @@
-import type { NextPage } from "next"
+import type { NextPage } from "next";
+import NextLink from "next/link";
 import {
+    Box,
     Button,
     Container,
     Flex,
-    FormControl,
-    Input,
-    InputGroup,
-    InputLeftAddon,
-    InputRightElement,
-    Select,
     Show,
     SimpleGrid,
     Stack,
@@ -19,7 +15,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faArrowPointer, faUniversalAccess, faShareNodes, faLink } from "@fortawesome/free-solid-svg-icons";
 import { ReactElement } from "react";
-import LinkBox from "../components/LinkBox";
 import IndexLevelSelector from "../components/IndexLevelSelector";
 
 
@@ -42,26 +37,31 @@ const Home: NextPage = () => {
                             4CILは著作物の利用規約をすぐに意思表明できるサービスです
                         </Text>
                         <Stack direction={{ base: "column", md: "row" }} spacing={4}>
-                            <Button
-                                bg={"blue.400"}
-                                color={"white"}
-                                size={"lg"}
-                                _hover={{
-                                    bg: "blue.500",
-                                }}>
-                                <Text pr={2}>使ってみる</Text>
-                                <FontAwesomeIcon icon={faArrowPointer} />
-                            </Button>
-                            <Button
-                                bg={"green.400"}
-                                color={"white"}
-                                size={"lg"}
-                                _hover={{
-                                    bg: "green.500",
-                                }}>
-                                <Text pr={2}>ライセンス一覧</Text>
-                                <FontAwesomeIcon icon={faMagnifyingGlass} />
-                            </Button>
+                            <NextLink href="#try" passHref>
+                                <Button
+                                    bg={"blue.400"}
+                                    color={"white"}
+                                    size={"lg"}
+                                    _hover={{
+                                        bg: "blue.500",
+                                    }}>
+                                    <Text pr={2}>使ってみる</Text>
+                                    <FontAwesomeIcon icon={faArrowPointer} />
+                                </Button>
+                            </NextLink>
+                            <NextLink href="/license" passHref>
+                                <Button
+                                    as={"a"}
+                                    bg={"green.400"}
+                                    color={"white"}
+                                    size={"lg"}
+                                    _hover={{
+                                        bg: "green.500",
+                                    }}>
+                                    <Text pr={2}>ライセンス一覧</Text>
+                                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                                </Button>
+                            </NextLink>
                         </Stack>
                     </Stack>
                 </Flex>
@@ -98,7 +98,9 @@ const Home: NextPage = () => {
                     />
                 </SimpleGrid>
             </Container>
-            <IndexLevelSelector />
+            <Box id="try">
+                <IndexLevelSelector />
+            </Box>
         </>
     );
 }
