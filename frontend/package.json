@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "run-p dev:*",
+    "dev:next": "next dev",
+    "dev:aspida": "aspida --watch",
+    "build": "aspida && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "api:build": "aspida"
   },
   "dependencies": {
+    "@aspida/axios": "^1.9.1",
     "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/react": "^1.8.7",
     "@emotion/react": "^11.8.2",
@@ -18,6 +22,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
+    "axios": "^0.26.1",
     "framer-motion": "^6.2.8",
     "next": "12.1.1",
     "react": "17.0.2",
@@ -30,6 +35,7 @@
     "eslint": "8.12.0",
     "eslint-config-next": "12.1.1",
     "sass": "^1.49.9",
-    "typescript": "4.6.3"
+    "typescript": "4.6.3",
+    "yarn-run-all": "^3.1.1"
   }
 }
