@@ -1,41 +1,69 @@
-import { FormControl, InputGroup, InputLeftAddon, Input, InputRightElement, Button, useColorModeValue, useClipboard } from "@chakra-ui/react";
+import { FormControl, Text, Container, Select, Box, Heading, HStack, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
+import NextLink from "next/link";
 
-interface LinkBoxProps {
-    path: string;
-}
+interface LevelSelectorProps { }
 
-export const LevelSelector: React.FC<LinkBoxProps> = ({ path }) => {
-    const urlPrefix: string = (process.env.NEXT_PUBLIC_APP_URL == undefined ? "https://4cil.ga" : process.env.NEXT_PUBLIC_APP_URL);
+export const LevelSelector: React.FC<LevelSelectorProps> = () => {
+    const [NPermission, setNPermission] = useState<string>("0");
+    const [CPermission, setCPermission] = useState<string>("0");
 
-    const [url, setUrl] = useState(urlPrefix + path);
-    const { hasCopied, onCopy } = useClipboard(url);
+    const handleNPermission = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+        setNPermission(e.target.value);
+    }
+
+    const handleCPermission = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+        setCPermission(e.target.value);
+    }
 
     return (
-        <FormControl>
-            <InputGroup>
-                <Input
-                    pr="4.5rem"
-                    type={"text"}
-                    isReadOnly
-                    placeholder={url}
-                    _placeholder={{ color: useColorModeValue("black", "white") }}
-                />
-                <InputRightElement width='6rem' px={2}>
-                    <Button h="1.75rem" size="sm"
-                        bg={hasCopied ? "green.400" : useColorModeValue("gray.100", "gray.700")}
-                        color={hasCopied ? "white" : ""}
-                        _hover={{
-                            bg: "green.500",
-                            color: "white"
-                        }}
-                        onClick={onCopy}
-                    >
-                        {hasCopied ? "COPIED!" : "COPY"}
-                    </Button>
-                </InputRightElement>
-            </InputGroup>
-        </FormControl>
+        <Container maxW={"container.lg"} p={8}>
+            <Box textAlign={"center"}>
+                <FormControl>
+                    <HStack justify="center" flexWrap={"wrap"}>
+                        <Heading size="xl">N</Heading>
+                        <Select value={NPermission} size="lg" variant="flushed" onChange={handleNPermission} id="NLevel" w={24}>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                        </Select>
+                        <Heading size="xl">C</Heading>
+                        <Select value={CPermission} size="lg" variant="flushed" onChange={handleCPermission} id="CLevel" w={24}>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                        </Select>
+                        <Heading size="xl" pr={8}>ライセンス</Heading>
+                        <NextLink href={"/n" + NPermission + "c" + CPermission} passHref>
+                            <Button size="lg"
+                                color="white"
+                                as={"a"}
+                                bg={"green.400"}
+                                _hover={{
+                                    bg: "green.500",
+                                    color: "white"
+                                }}
+                            >
+                                Go!
+                            </Button>
+                        </NextLink>
+                    </HStack>
+                </FormControl>
+                <Text color={'gray.500'} p={2}>
+                    非商用利用レベル{NPermission} : 商用利用レベル{CPermission}
+                </Text>
+            </Box>
+        </Container>
     );
 };
 

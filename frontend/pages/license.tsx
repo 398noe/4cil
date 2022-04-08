@@ -1,24 +1,21 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import { useRouter } from 'next/router';
-import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid, Button, FormControl, Input, InputGroup, InputLeftAddon, InputRightElement } from '@chakra-ui/react';
+import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid, Button, FormControl, Input, InputGroup, InputLeftAddon, InputRightElement, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
 import LinkBox from '../components/LinkBox';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { useEffect, useState } from 'react';
+import { apiClient } from '../utils/apiClient';
+import { LicenseItems } from '../api/licenses';
+import LevelSelector from '../components/LevelSelector';
 
-const splitNC = (str: string) => {
-    const handleStr = str + "xxxx";
-    return [handleStr.slice(0, 2), handleStr.slice(2, 4)];
-}
-const splitLevel = (str: string) => {
-    return Number(str.slice(1, 2));
+interface LicenseProps {
+    licenses: LicenseItems;
 }
 
-const License: NextPage = () => {
+const License: NextPage<LicenseProps> = ({ licenses }) => {
     return (
         <>
-
             <Box textAlign="center" pt={24} pb={8} px={6}>
                 <Heading as="h2" size="xl" mt={6} mb={2}>
                     ライセンス一覧
@@ -39,19 +36,64 @@ const License: NextPage = () => {
                 <Text as={"h2"} pb={4}>数字は0から7を指定することができ、それぞれ以下の意味を示します</Text>
             </Container>
             <Container maxW={"container.lg"} p={8}>
-                <Text>ここに表を展開</Text>
-            </Container>
-            <Container>
-                <Text>ここにレベル選択とそのライセンスに飛ぶことのできるURL生成器を作成</Text>
+                <TableContainer>
+                    <Table variant='simple'>
+                        <TableCaption>ライセンスレベル表</TableCaption>
+                        <Thead>
+                            <Tr>
+                                <Th>レベル</Th>
+                                <Th>説明</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {
+                                licenses.map((data, index) => {
+                                    return (
+                                        <Tr key={index}>
+                                            <Td>{data.level}</Td>
+                                            <Td>{data.description}</Td>
+                                        </Tr>
+                                    );
+                                })
+                            }
+                        </Tbody>
+                    </Table>
+                </TableContainer>
             </Container>
             <Divider color={useColorModeValue("gray.200", "gray.800")} />
             <Container maxW={"container.lg"} p={8}>
-                <Text as={"span"} fontSize={["2xl", "3xl"]} fontWeight={700}>このライセンスを使用したい！</Text>
-                <Text as={"h2"} pt={8} pb={2}>以下のリンクを素材のライセンス先のリンクに貼り付けてください</Text>
-                <LinkBox path="/n5n3" />
+                <Text as={"span"} fontSize={["2xl", "3xl"]} fontWeight={700}>ライセンスを使用したい！</Text>
+                <Text as={"h2"} pt={8} pb={2}>上のレベル表から、使用したいライセンスレベルの数字を選択して、ページに飛んでください</Text>
+                <LevelSelector />
             </Container>
         </>
     );
 }
 
 export default License;
+
+/**
+ * Get contents from strapi.
+ * @returns license data
+ */
+export const getStaticProps: GetStaticProps = async () => {
+    const token = process.env.BEARER_TOKEN;
+    // Access Strapi API
+    const licensesRes = await apiClient.licenses.get({ headers: { Authorization: `Bearer ${token}` } });
+
+    // Licenses データを再構築
+    let licenses: LicenseItems = [];
+    licensesRes.body.data.map((data) => {
+        licenses.push({
+            description: data.attributes.description,
+            level: data.attributes.level,
+            allow: data.attributes.allow,
+            disallow: data.attributes.disallow
+        });
+    });
+    return {
+        props: {
+            licenses
+        }
+    }
+}

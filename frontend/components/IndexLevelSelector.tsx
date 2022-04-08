@@ -81,14 +81,6 @@ export const IndexLevelSelector: React.FC<IndexLevelSelectorProps> = () => {
         setLevel([levelSelector(NPermission), levelSelector(CPermission)]);
     }, [NPermission, CPermission]);
 
-
-
-    const ShowLinkBox = (): JSX.Element => {
-        return (
-            <LinkBox path={"/n" + level[0] + "c" + level[1]} />);
-    }
-
-
     return (
         <Container maxW={"container.lg"} p={8}>
             <Text as={"span"} fontSize={["4xl", "5xl"]} fontWeight={700}>Let's TRY</Text>
