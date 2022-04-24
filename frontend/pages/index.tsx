@@ -1,14 +1,10 @@
-import type { NextPage } from "next"
+import type { NextPage } from "next";
+import NextLink from "next/link";
 import {
+    Box,
     Button,
     Container,
     Flex,
-    FormControl,
-    Input,
-    InputGroup,
-    InputLeftAddon,
-    InputRightElement,
-    Select,
     Show,
     SimpleGrid,
     Stack,
@@ -19,7 +15,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faArrowPointer, faUniversalAccess, faShareNodes, faLink } from "@fortawesome/free-solid-svg-icons";
 import { ReactElement } from "react";
-import LinkBox from "../components/LinkBox";
+import IndexLevelSelector from "../components/IndexLevelSelector";
 
 
 interface FeatureProps {
@@ -41,26 +37,31 @@ const Home: NextPage = () => {
                             4CILは著作物の利用規約をすぐに意思表明できるサービスです
                         </Text>
                         <Stack direction={{ base: "column", md: "row" }} spacing={4}>
-                            <Button
-                                bg={"blue.400"}
-                                color={"white"}
-                                size={"lg"}
-                                _hover={{
-                                    bg: "blue.500",
-                                }}>
-                                <Text pr={2}>使ってみる</Text>
-                                <FontAwesomeIcon icon={faArrowPointer} />
-                            </Button>
-                            <Button
-                                bg={"green.400"}
-                                color={"white"}
-                                size={"lg"}
-                                _hover={{
-                                    bg: "green.500",
-                                }}>
-                                <Text pr={2}>ライセンス一覧</Text>
-                                <FontAwesomeIcon icon={faMagnifyingGlass} />
-                            </Button>
+                            <NextLink href="#try" passHref>
+                                <Button
+                                    bg={"blue.400"}
+                                    color={"white"}
+                                    size={"lg"}
+                                    _hover={{
+                                        bg: "blue.500",
+                                    }}>
+                                    <Text pr={2}>使ってみる</Text>
+                                    <FontAwesomeIcon icon={faArrowPointer} />
+                                </Button>
+                            </NextLink>
+                            <NextLink href="/license" passHref>
+                                <Button
+                                    as={"a"}
+                                    bg={"green.400"}
+                                    color={"white"}
+                                    size={"lg"}
+                                    _hover={{
+                                        bg: "green.500",
+                                    }}>
+                                    <Text pr={2}>ライセンス一覧</Text>
+                                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                                </Button>
+                            </NextLink>
                         </Stack>
                     </Stack>
                 </Flex>
@@ -97,74 +98,9 @@ const Home: NextPage = () => {
                     />
                 </SimpleGrid>
             </Container>
-            <Container maxW={"container.lg"} p={8}>
-                <Text as={"span"} fontSize={["4xl", "5xl"]} fontWeight={700}>Let's TRY</Text>
-                <Text as={"h2"} fontSize={["2xl"]} pb={8}>以下の選択肢を選ぶだけで簡単にリンクを生成できます</Text>
-                <Container>
-                    <SimpleGrid columns={3} spacing={2} alignItems={"center"}>
-                        <Text></Text>
-                        <Text textAlign={"center"}>非商用利用</Text>
-                        <Text textAlign={"center"}>商用利用</Text>
-                        <Text>利用</Text>
-                        <FormControl>
-                            <Select id="n-use">
-                                <option value="o">許可する</option>
-                                <option value="x">許可しない</option>
-                            </Select>
-                        </FormControl>
-                        <FormControl>
-                            <Select id="c-use">
-                                <option value="o">許可する</option>
-                                <option value="x">許可しない</option>
-                            </Select>
-                        </FormControl>
-                        <Text>加工改変</Text>
-                        <FormControl>
-                            <Select id="n-edit">
-                                <option value="o">許可する</option>
-                                <option value="x">許可しない</option>
-                            </Select>
-                        </FormControl>
-                        <FormControl>
-                            <Select id="c-edit">
-                                <option value="o">許可する</option>
-                                <option value="x">許可しない</option>
-                            </Select>
-                        </FormControl>
-                        <Text>再配布</Text>
-                        <FormControl>
-                            <Select id="n-distribute">
-                                <option value="o">許可する</option>
-                                <option value="x">許可しない</option>
-                            </Select>
-                        </FormControl>
-                        <FormControl>
-                            <Select id="c-distribute">
-                                <option value="o">許可する</option>
-                                <option value="x">許可しない</option>
-                            </Select>
-                        </FormControl>
-                        <Text>クレジット表記</Text>
-                        <FormControl>
-                            <Select id="n-credit">
-                                <option value="oo">必要</option>
-                                <option value="ox">再配布のみ必要</option>
-                                <option value="xx">不要</option>
-                            </Select>
-                        </FormControl>
-                        <FormControl>
-                            <Select id="c-credit">
-                                <option value="oo">必要</option>
-                                <option value="ox">再配布のみ必要</option>
-                                <option value="xx">不要</option>
-                            </Select>
-                        </FormControl>
-                    </SimpleGrid>
-                    <Text>ここに選択肢をもとにレベルを作成するジェネレータを用意</Text>
-                </Container>
-                <Text as={"h2"} fontSize={["2xl"]} pt={8} pb={2}>以下のリンクを素材のライセンス先のリンクに貼り付けてください</Text>
-                <LinkBox path="/n5c5"/>
-            </Container>
+            <Box id="try">
+                <IndexLevelSelector />
+            </Box>
         </>
     );
 }

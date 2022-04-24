@@ -6,7 +6,6 @@ import {
     Text,
     Link,
     Button,
-    useDisclosure,
     useColorModeValue,
     Stack,
     useColorMode,
@@ -42,8 +41,12 @@ export default function Header() {
 
                 <Flex alignItems={'center'}>
                     <Stack direction={'row'} spacing={2}>
-                        <Button variant="ghost"><FontAwesomeIcon icon={faMagnifyingGlass} /></Button>
-                        <Button variant="ghost"><FontAwesomeIcon icon={faGithub} /></Button>
+                        <NextLink href="/license" passHref>
+                            <Button variant="ghost" as="a"><FontAwesomeIcon icon={faMagnifyingGlass} /></Button>
+                        </NextLink>
+                        <NextLink href="https://github.com/398noe/4cil" passHref>
+                            <Button variant="ghost" as="a"><FontAwesomeIcon icon={faGithub} /></Button>
+                        </NextLink>
                         <Button onClick={toggleColorMode} variant="ghost">
                             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
                         </Button>

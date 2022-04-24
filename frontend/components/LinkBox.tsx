@@ -1,4 +1,4 @@
-import { FormControl, InputGroup, InputLeftAddon, Input, InputRightElement, Button, useColorModeValue, useClipboard } from "@chakra-ui/react";
+import { FormControl, InputGroup, Input, InputRightElement, Button, useColorModeValue, useClipboard } from "@chakra-ui/react";
 import React, { useState } from "react";
 
 interface LinkBoxProps {
@@ -8,8 +8,7 @@ interface LinkBoxProps {
 export const LinkBox: React.FC<LinkBoxProps> = ({ path }) => {
     const urlPrefix: string = (process.env.NEXT_PUBLIC_APP_URL == undefined ? "https://4cil.ga" : process.env.NEXT_PUBLIC_APP_URL);
 
-    const [url, setUrl] = useState(urlPrefix + path);
-    const { hasCopied, onCopy } = useClipboard(url);
+    const { hasCopied, onCopy } = useClipboard(urlPrefix + path);
 
     return (
         <FormControl>
@@ -18,7 +17,7 @@ export const LinkBox: React.FC<LinkBoxProps> = ({ path }) => {
                     pr="4.5rem"
                     type={"text"}
                     isReadOnly
-                    placeholder={url}
+                    placeholder={urlPrefix + path}
                     _placeholder={{color: useColorModeValue("black","white")}}
                 />
                 <InputRightElement width='6rem' px={2}>
