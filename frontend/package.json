@@ -23,6 +23,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "axios": "^0.26.1",
+    "canvas": "^2.9.1",
     "framer-motion": "^6.2.8",
     "next": "12.1.1",
     "react": "17.0.2",

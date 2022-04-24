@@ -1,10 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next'
-import { useRouter } from 'next/router';
-import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid, Button, FormControl, Input, InputGroup, InputLeftAddon, InputRightElement, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
-import LinkBox from '../components/LinkBox';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from 'react';
+import { Box, Divider, Heading, Text, Container, useColorModeValue, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { apiClient } from '../utils/apiClient';
 import { LicenseItems } from '../api/licenses';
 import LevelSelector from '../components/LevelSelector';
