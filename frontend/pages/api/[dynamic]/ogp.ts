@@ -21,6 +21,7 @@ const createOgp = async (
     if (urlCheck(link, regex)) {
         level = [Number(link.slice(1, 2)), Number(link.slice(3, 4))];
     } else {
+        res.status(404).send("Not found");
         res.end();
     }
     

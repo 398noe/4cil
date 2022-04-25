@@ -10,6 +10,7 @@ import { Box, Divider, Heading, Text, Container, useColorModeValue, SimpleGrid }
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
+import Head from "next/head";
 
 
 interface LevelProps {
@@ -18,8 +19,33 @@ interface LevelProps {
 };
 
 const Level: NextPage<LevelProps> = ({ licenses, level }) => {
+    const baseUrl: string = process.env.NEXT_PUBLIC_APP_URL ?? "";
     return (
         <>
+            <Head>
+                <meta property="og:title" content="4CIL - 最強の、四文字属性。" />
+                <meta property="og:site_name" content="4 Character Internet License" />
+                <meta property="og:description" content="4CILは著作物の利用規約をすぐに意思表明できるサービスです" />
+                <meta property="og:url" content="https://4cil.ga" />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:site" content="@398noe" />
+                <meta name="twitter:creator" content="@398noe" />
+                <meta
+                    property="og:image"
+                    key="ogImage"
+                    content={`${baseUrl}/api/${"n" + level[0] + "c" + level[1]}/ogp`}
+                />
+                <meta
+                    name="twitter:card"
+                    key="twitterCard"
+                    content="summary_large_image"
+                />
+                <meta
+                    name="twitter:image"
+                    key="twitterImage"
+                    content={`${baseUrl}/api/${"n" + level[0] + "c" + level[1]}/ogp`}
+                />
+            </Head>
             <Box textAlign="center" pt={24} pb={8} px={6}>
                 <Heading as="h2" size="xl" mt={6} mb={2}>
                     N{level[0]}C{level[1]}ライセンス
@@ -58,7 +84,7 @@ const Level: NextPage<LevelProps> = ({ licenses, level }) => {
                 }
             </Container>
             <Divider color={useColorModeValue("gray.200", "gray.800")} />
-            <Container maxW={"container.lg"} p={8}>
+            <Container maxW={"container.lg"} p={8} pb={12}>
                 <Text as={"span"} fontSize={["2xl", "3xl"]} fontWeight={700}>このライセンスを使用したい！</Text>
                 <Text as={"h2"} pt={8} pb={2}>以下のリンクを素材のライセンス先のリンクに貼り付けてください</Text>
                 <LinkBox path={"/n" + level[0] + "c" + level[1]} />
