@@ -3,6 +3,7 @@ import { Box, Divider, Heading, Text, Container, useColorModeValue, Table, Table
 import { apiClient } from '../utils/apiClient';
 import { LicenseItems } from '../api/licenses';
 import LevelSelector from '../components/LevelSelector';
+import Head from 'next/head';
 
 interface LicenseProps {
     licenses: LicenseItems;
@@ -11,6 +12,22 @@ interface LicenseProps {
 const License: NextPage<LicenseProps> = ({ licenses }) => {
     return (
         <>
+            <Head>
+                <meta property="og:title" content="4CIL - 最強の、四文字属性。" />
+                <meta property="og:site_name" content="4 Character Internet License" />
+                <meta property="og:description" content="4CILは著作物の利用規約をすぐに意思表明できるサービスです" />
+                <meta property="og:url" content="https://4cil.ga" />
+                <meta property="og:image" content="https://4cil.ga/ogp_license.png" />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:site" content="@398noe" />
+                <meta name="twitter:creator" content="@398noe" />
+                <meta
+                    name="twitter:image"
+                    key="twitterImage"
+                    content="https://4cil.ga/ogp_license.png"
+                />
+                <meta name="twitter:card" content="summary_large_image" />
+            </Head>
             <Box textAlign="center" pt={24} pb={8} px={6}>
                 <Heading as="h2" size="xl" mt={6} mb={2}>
                     ライセンス一覧
