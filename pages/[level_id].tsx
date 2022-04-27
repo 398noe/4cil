@@ -19,7 +19,9 @@ interface LevelProps {
 };
 
 const Level: NextPage<LevelProps> = ({ licenses, level }) => {
+
     const baseUrl: string = process.env.NEXT_PUBLIC_APP_URL ?? "";
+    
     return (
         <>
             <Head>
