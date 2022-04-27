@@ -28,13 +28,16 @@ const createOgp = async (
 
     // Get LicenseData
     const licenses: LicenseItems = getLicenseData(level);
-    const isDev = process.env.IS_DEV ?? "false";
 
     try {
         const html = await generateHTML(level, licenses);
 
         // View Port setting
         const viewport: ViewportSize = { width: 1200, height: 630 };
+        res.statusCode = 200;
+        res.setHeader("Content-Type", "text/html");
+        res.end(html);
+        return;
         const image = await generateImage(viewport, html);
 
         // Content Type

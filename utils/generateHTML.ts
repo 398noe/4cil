@@ -3,8 +3,8 @@ import path from "path";
 import { Level } from "../types/level";
 import { LicenseItems } from "../types/licenses";
 
-const regular = readFileSync(path.resolve("./fonts/notoRegular.otf")).toString("base64");
-const black = readFileSync(path.resolve("./fonts/notoBlack.otf")).toString("base64");
+const regular = readFileSync(path.resolve("./fonts/notoRegular.woff")).toString("base64");
+const black = readFileSync(path.resolve("./fonts/notoBlack.woff")).toString("base64");
 
 /**
  * generateHTML
@@ -23,21 +23,21 @@ export const generateHTML = async (level: Level, licenses: LicenseItems) => {
     </head>
     <style>
         @font-face {
-            font-family: 'Noto Sans CJK JP';
+            font-family: 'Noto Sans JP';
             font-style: normal;
-            font-weight: 500;
-            src: url(data:font/otf;charset=utf-8;base64,${regular}) format("otf");
+            font-weight: 400;
+            src: url(data:font/wotf;charset=utf-8;base64,${regular}) format("woff");
         }
     
         @font-face {
-            font-family: 'Noto Sans CJK JP';
+            font-family: 'Noto Sans JP';
             font-style: normal;
             font-weight: 900;
-            src: url(data:font/otf;charset=utf-8;base64,${black}) format("otf");
+            src: url(data:font/wotf;charset=utf-8;base64,${black}) format("woff");
         }
     
         body {
-            font-family: "Noto Sans CJK JP";
+            font-family: "Noto Sans JP", sans-serif;
             font-weight: 400;
         }
     
@@ -71,10 +71,12 @@ export const generateHTML = async (level: Level, licenses: LicenseItems) => {
         th {
             font-size: 48px;
             font-weight: 900;
+            width: 200px;
         }
     
         td {
             font-size: 24px;
+            width: 400px;
         }
     </style>
     
