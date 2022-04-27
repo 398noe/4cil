@@ -1,5 +1,5 @@
 import { FormControl, InputGroup, Input, InputRightElement, Button, useColorModeValue, useClipboard } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 
 interface LinkBoxProps {
     path: string;

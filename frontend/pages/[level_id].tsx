@@ -1,5 +1,4 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from "next";
-import { apiClient } from "../utils/apiClient";
 import { urlCheck } from "../utils/urlCheck";
 import { LicenseItems } from "../api/licenses";
 import { Level } from "../types/level";
@@ -11,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import Head from "next/head";
-import { licenseData } from "../utils/licenseData";
+import { getLicenseData } from "../utils/getLicenseData";
 
 
 interface LevelProps {
@@ -113,20 +112,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         }
     }
 
-    const licensesRes = licenseData;
-
-    // Licenses データを再構築
-    let licenses: LicenseItems = [];
-    for (let i = 0; i < level.length; i++) {
-        licensesRes.filter((data => data.level == level[i])).map((data) => {
-            licenses.push({
-                description: data.description,
-                level: data.level,
-                allow: data.allow,
-                disallow: data.disallow
-            });
-        });
-    }
+    const licenses = getLicenseData(level);
+    
     return {
         props: {
             licenses, level

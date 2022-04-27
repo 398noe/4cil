@@ -2,10 +2,10 @@ import type { NextPage } from 'next'
 import { Box, Divider, Heading, Text, Container, useColorModeValue, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import LevelSelector from '../components/LevelSelector';
 import Head from 'next/head';
-import { licenseData } from '../utils/licenseData';
+import { getAllLicenseData } from '../utils/getLicenseData';
 
 const License: NextPage<{}> = () => {
-    const licenses = licenseData;
+    const licenses = getAllLicenseData();
     return (
         <>
             <Head>

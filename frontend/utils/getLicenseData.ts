@@ -16,3 +16,7 @@ export const getLicenseData = (level: Level): LicenseItems => {
     return res;
 }
 
+
+export const getAllLicenseData = (): LicenseItems => {
+    return licenseData;
+}
