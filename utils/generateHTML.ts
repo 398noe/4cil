@@ -1,10 +1,17 @@
 import { readFileSync } from "fs";
+import path from "path";
 import { Level } from "../types/level";
 import { LicenseItems } from "../types/licenses";
 
-const regular = readFileSync(`${__dirname}/../fonts/notoRegular.otf`).toString("base64");
-const black = readFileSync(`${__dirname}/../fonts/notoBlack.otf`).toString("base64");
+const regular = readFileSync(path.resolve("./fonts/notoRegular.otf")).toString("base64");
+const black = readFileSync(path.resolve("./fonts/notoBlack.otf")).toString("base64");
 
+/**
+ * generateHTML
+ * @param level 
+ * @param licenses 
+ * @returns HTMLData
+ */
 export const generateHTML = async (level: Level, licenses: LicenseItems) => {
     return `<!DOCTYPE html>
     <html lang="ja">
