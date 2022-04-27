@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import Head from "next/head";
+import { licenseData } from "../utils/licenseData";
 
 
 interface LevelProps {
@@ -111,19 +112,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             notFound: true
         }
     }
-    const token = process.env.BEARER_TOKEN;
-    // Access Strapi API
-    const licensesRes = await apiClient.licenses.get({ headers: { Authorization: `Bearer ${token}` } });
+
+    const licensesRes = licenseData;
 
     // Licenses データを再構築
     let licenses: LicenseItems = [];
     for (let i = 0; i < level.length; i++) {
-        licensesRes.body.data.filter((data => data.attributes.level == level[i])).map((data) => {
+        licensesRes.filter((data => data.level == level[i])).map((data) => {
             licenses.push({
-                description: data.attributes.description,
-                level: data.attributes.level,
-                allow: data.attributes.allow,
-                disallow: data.attributes.disallow
+                description: data.description,
+                level: data.level,
+                allow: data.allow,
+                disallow: data.disallow
             });
         });
     }
