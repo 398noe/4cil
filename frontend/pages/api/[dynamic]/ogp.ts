@@ -1,7 +1,7 @@
 import { createCanvas, registerFont } from "canvas";
 import { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
-import { LicenseItems } from "../../../api/licenses";
+import { LicenseItems } from "../../../types/licenses";
 import { Level } from "../../../types/level";
 import { getLicenseData } from "../../../utils/getLicenseData";
 import { urlCheck } from "../../../utils/urlCheck";

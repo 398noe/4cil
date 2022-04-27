@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from "next";
 import { urlCheck } from "../utils/urlCheck";
-import { LicenseItems } from "../api/licenses";
+import { LicenseItems } from "../types/licenses";
 import { Level } from "../types/level";
 
 import LinkBox from '../components/LinkBox';

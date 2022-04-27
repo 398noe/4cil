@@ -1,4 +1,4 @@
-import { LicenseItems } from "../api/licenses";
+import { LicenseItems } from "../types/licenses";
 import { Level } from "../types/level";
 import { licenseData } from "./licenseData";
 
