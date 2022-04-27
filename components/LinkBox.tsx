@@ -18,10 +18,11 @@ export const LinkBox: React.FC<LinkBoxProps> = ({ path }) => {
                     type={"text"}
                     isReadOnly
                     placeholder={urlPrefix + path}
-                    _placeholder={{color: useColorModeValue("black","white")}}
+                    _placeholder={{ color: useColorModeValue("black", "white") }}
                 />
                 <InputRightElement width='6rem' px={2}>
                     <Button h="1.75rem" size="sm"
+                        // eslint-disable-next-line react-hooks/rules-of-hooks
                         bg={hasCopied ? "green.400" : useColorModeValue("gray.100", "gray.700")}
                         color={hasCopied ? "white" : ""}
                         _hover={{
