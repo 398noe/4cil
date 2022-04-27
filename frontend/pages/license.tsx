@@ -1,15 +1,11 @@
-import type { GetStaticProps, NextPage } from 'next'
+import type { NextPage } from 'next'
 import { Box, Divider, Heading, Text, Container, useColorModeValue, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { apiClient } from '../utils/apiClient';
-import { LicenseItems } from '../api/licenses';
 import LevelSelector from '../components/LevelSelector';
 import Head from 'next/head';
+import { licenseData } from '../utils/licenseData';
 
-interface LicenseProps {
-    licenses: LicenseItems;
-}
-
-const License: NextPage<LicenseProps> = ({ licenses }) => {
+const License: NextPage<{}> = () => {
+    const licenses = licenseData;
     return (
         <>
             <Head>
@@ -83,29 +79,3 @@ const License: NextPage<LicenseProps> = ({ licenses }) => {
 }
 
 export default License;
-
-/**
- * Get contents from strapi.
- * @returns license data
- */
-export const getStaticProps: GetStaticProps = async () => {
-    const token = process.env.BEARER_TOKEN;
-    // Access Strapi API
-    const licensesRes = await apiClient.licenses.get({ headers: { Authorization: `Bearer ${token}` } });
-
-    // Licenses データを再構築
-    let licenses: LicenseItems = [];
-    licensesRes.body.data.map((data) => {
-        licenses.push({
-            description: data.attributes.description,
-            level: data.attributes.level,
-            allow: data.attributes.allow,
-            disallow: data.attributes.disallow
-        });
-    });
-    return {
-        props: {
-            licenses
-        }
-    }
-}
