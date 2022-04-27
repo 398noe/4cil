@@ -1,7 +1,6 @@
 import type { NextPage, GetStaticProps, GetStaticPaths } from "next";
-import { apiClient } from "../utils/apiClient";
 import { urlCheck } from "../utils/urlCheck";
-import { LicenseItems } from "../api/licenses";
+import { LicenseItems } from "../types/licenses";
 import { Level } from "../types/level";
 
 import LinkBox from '../components/LinkBox';
@@ -11,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import Head from "next/head";
+import { getLicenseData } from "../utils/getLicenseData";
 
 
 interface LevelProps {
@@ -111,22 +111,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             notFound: true
         }
     }
-    const token = process.env.BEARER_TOKEN;
-    // Access Strapi API
-    const licensesRes = await apiClient.licenses.get({ headers: { Authorization: `Bearer ${token}` } });
 
-    // Licenses データを再構築
-    let licenses: LicenseItems = [];
-    for (let i = 0; i < level.length; i++) {
-        licensesRes.body.data.filter((data => data.attributes.level == level[i])).map((data) => {
-            licenses.push({
-                description: data.attributes.description,
-                level: data.attributes.level,
-                allow: data.attributes.allow,
-                disallow: data.attributes.disallow
-            });
-        });
-    }
+    const licenses = getLicenseData(level);
+    
     return {
         props: {
             licenses, level

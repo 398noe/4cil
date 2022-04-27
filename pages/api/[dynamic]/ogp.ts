@@ -1,9 +1,9 @@
 import { createCanvas, registerFont } from "canvas";
-import { GetStaticProps, NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
-import { LicenseItems } from "../../../api/licenses";
+import { LicenseItems } from "../../../types/licenses";
 import { Level } from "../../../types/level";
-import { apiClient } from "../../../utils/apiClient";
+import { getLicenseData } from "../../../utils/getLicenseData";
 import { urlCheck } from "../../../utils/urlCheck";
 
 const createOgp = async (
@@ -25,9 +25,8 @@ const createOgp = async (
         res.end();
     }
     
-    // Get data from strapi
-    const licenses: LicenseItems = await getData(level);
-
+    // Get LicenseData
+    const licenses: LicenseItems = getLicenseData(level);
 
     const WIDTH = 1200 as const;
     const HEIGHT = 630 as const;
@@ -91,26 +90,3 @@ const createOgp = async (
 };
 
 export default createOgp;
-
-/**
- * strapiからデータを取得
- */
-const getData = async (level: Level): Promise<LicenseItems> => {
-    const token = process.env.BEARER_TOKEN;
-    // Access Strapi API
-    const licensesRes = await apiClient.licenses.get({ headers: { Authorization: `Bearer ${token}` } });
-
-    // Licenses データを再構築
-    let licenses: LicenseItems = [];
-    for (let i = 0; i < level.length; i++) {
-        licensesRes.body.data.filter((data => data.attributes.level == level[i])).map((data) => {
-            licenses.push({
-                description: data.attributes.description,
-                level: data.attributes.level,
-                allow: data.attributes.allow,
-                disallow: data.attributes.disallow
-            });
-        });
-    }
-    return licenses;
-}
