@@ -34,10 +34,6 @@ const createOgp = async (
 
         // View Port setting
         const viewport: ViewportSize = { width: 1200, height: 630 };
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "text/html");
-        res.end(html);
-        return;
         const image = await generateImage(viewport, html);
 
         // Content Type
