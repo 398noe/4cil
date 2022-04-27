@@ -5,7 +5,7 @@ import { getLicenseData } from "../../../utils/getLicenseData";
 import { urlCheck } from "../../../utils/urlCheck";
 import { generateHTML } from "../../../utils/generateHTML";
 import { generateImage } from "../../../utils/generateImage";
-import { Viewport } from "puppeteer-core";
+import { ViewportSize } from "playwright-core";
 
 const createOgp = async (
     req: NextApiRequest,
@@ -34,8 +34,8 @@ const createOgp = async (
         const html = await generateHTML(level, licenses);
 
         // View Port setting
-        const viewport: Viewport = { width: 1200, height: 630 };
-        const image = await generateImage(isDev, viewport, html);
+        const viewport: ViewportSize = { width: 1200, height: 630 };
+        const image = await generateImage(viewport, html);
 
         // Content Type
         res.statusCode = 200;
