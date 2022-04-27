@@ -1,11 +1,9 @@
 import { createCanvas, registerFont } from "canvas";
-import { GetStaticProps, NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
 import { LicenseItems } from "../../../api/licenses";
 import { Level } from "../../../types/level";
-import { apiClient } from "../../../utils/apiClient";
 import { getLicenseData } from "../../../utils/getLicenseData";
-import { licenseData } from "../../../utils/licenseData";
 import { urlCheck } from "../../../utils/urlCheck";
 
 const createOgp = async (
@@ -29,7 +27,6 @@ const createOgp = async (
     
     // Get LicenseData
     const licenses: LicenseItems = getLicenseData(level);
-
 
     const WIDTH = 1200 as const;
     const HEIGHT = 630 as const;
