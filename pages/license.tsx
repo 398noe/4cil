@@ -9,6 +9,7 @@ const License: NextPage<{}> = () => {
     return (
         <>
             <Head>
+                <title>ライセンス一覧 - 4CIL</title>
                 <meta property="og:title" content="4CIL - 最強の、四文字属性。" />
                 <meta property="og:site_name" content="4 Character Internet License" />
                 <meta property="og:description" content="4CILは著作物の利用規約をすぐに意思表明できるサービスです" />
