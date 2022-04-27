@@ -1,9 +1,0 @@
-name = "4cil"
-type = "javascript"
-account_id = "2022-04-26"
-workers_dev =true
-route = ""
-zone_id = ""
-
-[site]
-bucket = "./out"
