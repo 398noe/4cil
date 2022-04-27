@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import path from "path";
 import { LicenseItems } from "../../../types/licenses";
 import { Level } from "../../../types/level";
 import { getLicenseData } from "../../../utils/getLicenseData";
@@ -29,13 +28,14 @@ const createOgp = async (
 
     // Get LicenseData
     const licenses: LicenseItems = getLicenseData(level);
+    const isDev = process.env.IS_DEV ?? "false";
 
     try {
         const html = await generateHTML(level, licenses);
 
         // View Port setting
         const viewport: Viewport = { width: 1200, height: 630 };
-        const image = await generateImage(viewport, html);
+        const image = await generateImage(isDev, viewport, html);
 
         // Content Type
         res.statusCode = 200;
