@@ -28,7 +28,6 @@ const createOgp = async (
 
     // Get LicenseData
     const licenses: LicenseItems = getLicenseData(level);
-    const isDev = process.env.IS_DEV ?? "false";
 
     try {
         const html = await generateHTML(level, licenses);
