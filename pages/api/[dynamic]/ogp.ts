@@ -38,10 +38,10 @@ const createOgp = async (
     ctx.fillStyle = "#FFF";
     ctx.fillRect(DX, DY, WIDTH, HEIGHT);
 
-    registerFont(path.resolve("./fonts/NotoSansJP-Black.otf"), {
+    registerFont(path.resolve("./fonts/notoBlack.otf"), {
         family: "Noto Black"
     });
-    registerFont(path.resolve("./fonts/NotoSansJP-Regular.otf"), {
+    registerFont(path.resolve("./fonts/notoRegular.otf"), {
         family: "Noto Regular"
     });
     ctx.font = "36px Noto Black";
