@@ -14,7 +14,7 @@ const ogp = Astro.props.ogp ?? BASE_URL + '/ogp.png';
 ---
 
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-theme="light">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -46,10 +46,6 @@ const ogp = Astro.props.ogp ?? BASE_URL + '/ogp.png';
 	html {
 		@apply text-white;
 		scroll-behavior: smooth;
-	}
-
-	body {
-		@apply bg-limdark-500;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
