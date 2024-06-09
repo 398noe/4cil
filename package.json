@@ -18,7 +18,8 @@
     "@fontsource-variable/noto-sans-jp": "^5.0.19",
     "astro": "^4.10.1",
     "astro-icon": "^1.1.0",
-    "satori": "^0.10.13"
+    "satori": "^0.10.13",
+    "sharp": "^0.33.4"
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.1.66",
