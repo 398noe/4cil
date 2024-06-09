@@ -1,3 +1,24 @@
-<footer class="footer footer-center fixed bottom-0 z-50 bg-gray-100">
-	<p class="p-4">&copy; 2022-2024 4CIL🔗 All right reserved</p>
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<footer class="text-content footer w-full items-center gap-4 bg-base-200 p-4">
+	<div class="grid-flow-row items-center">
+		<p>4 Character Internet License Project🔗 &copy; 2022-2024</p>
+		<p>
+			All rights reserved by <a href="https://github.com/398noe" class="link" target="_blank">@398noe</a>
+		</p>
+	</div>
+	<nav class="grid-flow-col gap-4 place-self-center md:place-self-center md:justify-self-end">
+		<a href="https://twitter.com/398noetan" target="_blank">
+			<button class="btn btn-circle btn-sm bg-base-300">
+				<Icon name="mdi:twitter" class="h-4 w-4" />
+			</button>
+		</a>
+		<a href="https://github.com/398noe" target="_blank">
+			<button class="btn btn-circle btn-sm bg-base-300">
+				<Icon name="mdi:github" class="h-4 w-4" />
+			</button>
+		</a>
+	</nav>
 </footer>
