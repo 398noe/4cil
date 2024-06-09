@@ -1,0 +1,15 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	path: string;
+	ogp?: string;
+}
+const { title, description, path, ogp } = Astro.props;
+---
+
+<Base title={title} description={description} path={path} ogp={ogp}>
+	<main class="min-h-screen"></main>
+</Base>
