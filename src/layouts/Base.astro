@@ -1,5 +1,6 @@
 ---
 import { BASE_URL } from '../types/const';
+import '@fontsource-variable/noto-sans-jp';
 
 interface Props {
 	title: string;
@@ -45,7 +46,11 @@ const ogp = Astro.props.ogp ?? BASE_URL + '/ogp.png';
 <style is:global>
 	html {
 		@apply text-white;
-		scroll-behavior: smooth;
+		font-family: 'Noto ';
+	}
+
+	body {
+		font-family: 'Noto Sans JP Variable', sans-serif;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
