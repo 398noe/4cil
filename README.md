@@ -3,11 +3,7 @@
 
 4CILは著作物の利用規約をすぐに意思表明できるサービスです
 
-
-
-## Official Site [https://4cil.ga](https://4cil.ga)
-
-
+[https://4cil.vercel.app](https://4cil.vercel.app)
 
 ## About
 
@@ -32,14 +28,12 @@
   4CILはライセンスの種類をURLで提供します。これによって、従来の利用規約よりも柔軟に、素材ごとにライセンスの種類を意思表明することができます
 
 
-
-
 ##### 注意事項
 
-###### ※これは @398noe がNextjsのお勉強のために作ったサイトだよ…！法的な拘束力はないかもしれないけど、みんなの創作物への意思表明が簡単になったらいいな…！
+###### ※これは @398noe がお勉強のために作ったサイトだよ…！法的な拘束力はないかもしれないけど、みんなの創作物への意思表明が簡単になったらいいな…！
 
 ---
 
-4 Character Internet License Project © 2022
+4 Character Internet License Project © 2022 - 2024
 
 All rights reserved by @398noe
