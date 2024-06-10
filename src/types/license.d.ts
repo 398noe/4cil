@@ -1,6 +1,16 @@
 export interface License {
 	description: string;
 	level: number;
-	allow: string;
-	disallow: string;
+	use: {
+		allow: boolean;
+		credit?: boolean;
+	};
+	edit: {
+		allow: boolean;
+		credit?: boolean;
+	};
+	dist: {
+		allow: boolean;
+		credit?: boolean;
+	};
 }
