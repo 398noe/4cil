@@ -1,16 +1,18 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import { BASE_URL } from '@/settings/const';
+import { license, getCreditMessage } from '@/settings/license';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (() => {
-    const levels: string[] = [];
-    for (let i = 0; i < 8; i++) {
-        for (let j = 0; j < 8; j++) {
-            levels.push(`n${i}c${j}`);
-        }
-    }
+	const levels: string[] = [];
+	for (let i = 0; i < 8; i++) {
+		for (let j = 0; j < 8; j++) {
+			levels.push(`n${i}c${j}`);
+		}
+	}
 
-    const paths = levels.map((l) => {
+	const paths = levels.map((l) => {
 		return {
 			params: {
 				level: l,
@@ -21,8 +23,76 @@ export const getStaticPaths = (() => {
 }) satisfies GetStaticPaths;
 
 const { level } = Astro.params;
+// nXcYのX, Yの数字を取得
+const [n, c] = level.slice(1).split('c').map(Number);
+
+const copylink = BASE_URL + '/' + level;
 ---
 
-<Layout title="4CIL - 最強の、四文字属性" description="4CILは著作物の利用規約をすぐに意思表明できるサービスです" path="/">
-	<p>{level}</p>
+<Layout title={`${level.toUpperCase()}ライセンス - 4CIL`} description="4CILは著作物の利用規約をすぐに意思表明できるサービスです" path="/">
+	<div class="p-8 text-center">
+		<h1 class="py-2 text-4xl font-extrabold">{level.toUpperCase()}ライセンス</h1>
+		<h2 class="py-2">非商用利用レベル{n} : 商用利用レベル{c}</h2>
+	</div>
+	<hr />
+	<div class="container mx-auto max-w-2xl p-8">
+		<h2 class="py-4 text-2xl font-extrabold">ライセンス情報</h2>
+		<p class="pb-4">この素材の利用条件については、以下の通りです</p>
+		<div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+			<div class="card w-full bg-base-100 shadow-md">
+				<div class="card-body">
+					<h2 class="card-title">非商用利用</h2>
+					<p>{license[n].description}</p>
+				</div>
+			</div>
+			<div class="card w-full bg-base-100 shadow-md">
+				<div class="card-body">
+					<h2 class="card-title">商用利用</h2>
+					<p>{license[c].description}</p>
+				</div>
+			</div>
+		</div>
+		<div class="overflow-x-auto py-8">
+			<table class="table table-pin-rows table-pin-cols">
+				<thead>
+					<tr>
+						<th></th>
+						<th>非商用利用</th>
+						<th>商用利用</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>使用</td>
+						<td>{license[n].use.allow ? 'はい' : 'いいえ'}</td>
+						<td>{license[c].use.allow ? 'はい' : 'いいえ'}</td>
+					</tr>
+					<tr>
+						<td>加工改変</td>
+						<td>{license[n].edit.allow ? 'はい' : 'いいえ'}</td>
+						<td>{license[c].edit.allow ? 'はい' : 'いいえ'}</td>
+					</tr>
+					<tr>
+						<td>再配布</td>
+						<td>{license[n].dist.allow ? 'はい' : 'いいえ'}</td>
+						<td>{license[c].dist.allow ? 'はい' : 'いいえ'}</td>
+					</tr>
+					<tr>
+						<td>クレジット表記</td>
+						<td>{getCreditMessage(n)}</td>
+						<td>{getCreditMessage(c)}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<hr />
+	<div class="container mx-auto max-w-2xl p-8">
+		<h2 class="py-4 text-2xl font-extrabold">このライセンスを使用したい!!</h2>
+		<p class="pb-4">以下のリンクを素材のライセンス先のリンクとして使用してください</p>
+		<label class="input input-bordered flex items-center gap-2">
+			<input type="text" class="grow" placeholder="" value={copylink} readonly />
+			<button class="btn btn-sm hover:btn-success hover:text-white">COPY</button>
+		</label>
+	</div>
 </Layout>
