@@ -1,5 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import { license } from '@/settings/license';
 ---
 
 <Layout title="ライセンス一覧 - 4CIL" description="4CILで使えるライセンスの一覧ページです" path="/license">
@@ -18,8 +19,8 @@ import Layout from '@/layouts/Layout.astro';
 		<p>4文字目の【0-7】は商用利用向けに許可するレベルを意味しています</p>
 	</div>
 	<div class="container mx-auto max-w-2xl p-8">
-		<h2 class="py-4 text-2xl font-bold">レベル形式</h2>
-		<p>レベルは0から7まで存在し、それぞれ以下の意味を示します</p>
+		<h2 class="py-2 text-2xl font-bold">レベル形式</h2>
+		<p class="py-4">レベルは0から7まで存在し、それぞれ以下の意味を示します</p>
 		<div class="overflow-x-auto">
 			<table class="table table-pin-rows table-pin-cols table-xs">
 				<thead>
@@ -28,7 +29,18 @@ import Layout from '@/layouts/Layout.astro';
 						<th>説明</th>
 					</tr>
 				</thead>
-				<tbody> </tbody>
+				<tbody>
+					{
+						Object.values(license).map((l) => {
+							return (
+								<tr>
+									<td class="text-right">{l.level}</td>
+									<td class="text-left">{l.description}</td>
+								</tr>
+							);
+						})
+					}
+				</tbody>
 			</table>
 		</div>
 	</div>
