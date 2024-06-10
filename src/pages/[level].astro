@@ -1,0 +1,28 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (() => {
+    const levels: string[] = [];
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            levels.push(`n${i}c${j}`);
+        }
+    }
+
+    const paths = levels.map((l) => {
+		return {
+			params: {
+				level: l,
+			},
+		};
+	});
+	return paths;
+}) satisfies GetStaticPaths;
+
+const { level } = Astro.params;
+---
+
+<Layout title="4CIL - 最強の、四文字属性" description="4CILは著作物の利用規約をすぐに意思表明できるサービスです" path="/">
+	<p>{level}</p>
+</Layout>
