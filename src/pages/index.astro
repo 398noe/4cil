@@ -1,11 +1,12 @@
 ---
+import Feature from '@/components/Feature.astro';
 import Layout from '@/layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 ---
 
 <Layout title="4CIL - 最強の、四文字属性" description="4CILは著作物の利用規約をすぐに意思表明できるサービスです" path="/">
 	<div class="hero bg-base-200 py-20">
-		<div class="hero-content flex-col">
+		<div class="hero-content flex-col gap-4 px-4 py-8">
 			<div class="flex flex-col gap-x-4 gap-y-12">
 				<h1 class="text-5xl font-extrabold md:text-7xl">最強の、<span class="md:hidden"><br /></span>四文字属性。</h1>
 				<h2 class="text-2xl md:text-5xl">4 Character Internet License</h2>
@@ -16,5 +17,43 @@ import { Icon } from 'astro-icon/components';
 				<button class="btn btn-success text-lg text-white">ライセンス一覧<Icon name="mdi:search" class="h-5 w-5" /></button>
 			</div>
 		</div>
+	</div>
+	<div class="container mx-auto flex max-w-5xl flex-col gap-4 p-8">
+		<h2 class="text-4xl font-extrabold">About</h2>
+		<h3 class="text-2xl">4CILは著作物の利用規約をすぐに意思表明できるサービスです</h3>
+		<p class="p-4">
+			著作物の利用規約は各サイトによって異なり、 利用者はそれぞれのサイトの利用規約を確認する必要があります。
+			また、利用規約を作成する側にとっては、他のサイトの文を参考にして、網羅的な利用規約を作成する必要があります。
+			<br />
+			4CILはこの手間を軽減するために、リンクを貼ることで著作物の利用規約を簡単に表示し、 特に著作物の利用、加工、改変、再配布に関する意思を明確にするお手伝いをいたします。
+		</p>
+	</div>
+	<div class="container mx-auto flex max-w-5xl flex-col gap-4 p-8">
+		<h2 class="text-4xl font-extrabold">Features</h2>
+		<h3 class="text-2xl">4CILは以下の特徴を持っています</h3>
+		<div class="flex flex-wrap justify-center gap-4">
+			<Feature
+				icon="mdi:accessibility"
+				color="text-info"
+				title="4文字のチカラ"
+				description="4CILはライセンスの種類を4文字で表します。例えば「N7C7」を選ぶことで、非商用・商用問わず、素材の使用・加工改変・再配布を許可、クレジット表記不要と意思表明することができます"
+			/>
+			<Feature
+				icon="mdi:share-variant-outline"
+				color="text-success"
+				title="見やすいライセンス"
+				description="4CILはOGPに対応しています。TwitterやFacebook・DiscordなどOGPに対応したWebサービスにリンクを貼ることで、リンクが画像として表示され、ライセンス内容を素早く表示することが可能です"
+			/>
+			<Feature
+				icon="mdi:link-variant"
+				color="text-warning"
+				title="素材ごとにリンク可能"
+				description="4CILはライセンスの種類をURLで提供します。これによって、従来の利用規約よりも柔軟に、素材ごとにライセンスの種類を意思表明することができます"
+			/>
+		</div>
+	</div>
+	<div class="container mx-auto flex max-w-5xl flex-col gap-4 p-8">
+		<h2 class="text-4xl font-extrabold">Let's TRY</h2>
+		<h3 class="text-2xl">以下の選択肢を選んで、リンクを生成しましょう!!</h3>
 	</div>
 </Layout>
