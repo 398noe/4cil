@@ -30,7 +30,12 @@ const [n, c] = level.slice(1).split('c').map(Number);
 const copylink = BASE_URL + '/' + level;
 ---
 
-<Layout title={`${level.toUpperCase()}ライセンス - 4CIL`} description="4CILは著作物の利用規約をすぐに意思表明できるサービスです" path="/">
+<Layout
+	title={`${level.toUpperCase()}ライセンス - 4CIL`}
+	description="4CILは著作物の利用規約をすぐに意思表明できるサービスです"
+	path="/"
+	ogp={`${BASE_URL}/ogp/${level}.png`}
+>
 	<div class="p-8 text-center">
 		<h1 class="py-2 text-4xl font-extrabold">{level.toUpperCase()}ライセンス</h1>
 		<h2 class="py-2">非商用利用レベル{n} : 商用利用レベル{c}</h2>

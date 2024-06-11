@@ -1,10 +1,11 @@
 ---
 import SelectLicense from '@/components/license/LevelSelect.astro';
 import Layout from '@/layouts/Layout.astro';
+import { BASE_URL } from '@/settings/const';
 import { license } from '@/settings/license';
 ---
 
-<Layout title="ライセンス一覧 - 4CIL" description="4CILで使えるライセンスの一覧ページです" path="/license">
+<Layout title="ライセンス一覧 - 4CIL" description="4CILで使えるライセンスの一覧ページです" path="/license" ogp=`${BASE_URL}/license.png`>
 	<div class="p-8 text-center">
 		<h1 class="py-2 text-4xl font-extrabold">ライセンス一覧</h1>
 		<h2 class="py-2">4CILで使用できるライセンス一覧</h2>
