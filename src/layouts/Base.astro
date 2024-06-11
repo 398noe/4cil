@@ -1,0 +1,68 @@
+---
+import { BASE_URL } from '../settings/const';
+import '@fontsource-variable/noto-sans-jp';
+
+interface Props {
+	title: string;
+	description: string;
+	path: string;
+	ogp?: string;
+}
+
+const { title, description, path } = Astro.props;
+const url = BASE_URL + path;
+const ogp = Astro.props.ogp ?? BASE_URL + '/ogp.png';
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<script is:inline>
+			const isdark = JSON.parse(localStorage.getItem('isdark'));
+			if (!isdark) {
+				document.documentElement.setAttribute('data-theme', 'corpotate');
+			} else {
+				document.documentElement.setAttribute('data-theme', 'business');
+			}
+		</script>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
+		<!-- <link rel="icon" type="image/png" href="/favicon.png" /> -->
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<meta content={description} name="description" />
+		<meta property="og:url" content={url} />
+		<meta property="og:title" content={title} />
+		<meta property="og:site_name" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content={ogp} />
+		<meta name="twitter:image:src" content={ogp} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:text:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:site" content="@398noetan" />
+		<meta name="twitter:creator" content="@398noetan" />
+		<meta name="twitter:card" content="summary_large_image" />
+
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+<style is:global>
+	html {
+		@apply text-white;
+	}
+
+	body {
+		font-family: 'Noto Sans JP Variable', sans-serif;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		:global(html) {
+			scroll-behavior: smooth;
+		}
+	}
+</style>

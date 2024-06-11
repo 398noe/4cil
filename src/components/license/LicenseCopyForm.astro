@@ -1,0 +1,36 @@
+---
+interface Props {
+	url: string;
+}
+
+const { url } = Astro.props;
+---
+
+<label class="input input-bordered relative flex items-center gap-2">
+	<input id="copyInput" type="text" class="grow" value={url} readonly />
+	<button id="copyButton" class="btn btn-sm absolute right-2 hover:btn-success hover:text-white">COPY</button>
+</label>
+
+<script>
+	const copyButton = document.getElementById('copyButton');
+	copyButton.addEventListener('click', async () => {
+		await copyToClipboard();
+	});
+
+	async function copyToClipboard() {
+		const copyInputElement = document.getElementById('copyInput') as HTMLInputElement;
+		const url = copyInputElement.value;
+		await navigator.clipboard.writeText(url);
+
+		copyButton.innerText = 'COPIED!';
+		copyButton.classList.add('btn-success');
+		copyButton.classList.add('text-white');
+		console.log('Copied to clipboard: ' + url);
+
+		setTimeout(() => {
+			copyButton.innerText = 'COPY';
+			copyButton.classList.remove('btn-success');
+			copyButton.classList.remove('text-white');
+		}, 2000);
+	}
+</script>

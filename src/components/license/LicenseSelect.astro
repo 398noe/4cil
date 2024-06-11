@@ -1,0 +1,223 @@
+---
+import { BASE_URL } from '@/settings/const';
+import LicenseCopyForm from './LicenseCopyForm.astro';
+---
+
+<license-select>
+	<div class="flex justify-center overflow-x-auto py-8">
+		<table class="table table-pin-rows table-pin-cols table-xs max-w-2xl md:table-md">
+			<thead>
+				<tr>
+					<th></th>
+					<th>非商用利用</th>
+					<th>商用利用</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>使用</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="nuse">
+							<option value="o" selected>許可</option>
+							<option value="x">禁止</option>
+						</select>
+					</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="cuse">
+							<option value="o" selected>許可</option>
+							<option value="x">禁止</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>加工改変</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="nedit">
+							<option value="o" selected>許可</option>
+							<option value="x">禁止</option>
+						</select>
+					</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="cedit">
+							<option value="o" selected>許可</option>
+							<option value="x">禁止</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>再配布</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="ndist">
+							<option value="o" selected>許可</option>
+							<option value="x">禁止</option>
+						</select>
+					</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="cdist">
+							<option value="o" selected>許可</option>
+							<option value="x">禁止</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>クレジット表記</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="ncredit">
+							<option value="oo" selected>必要</option>
+							<option value="xo" id="redist">再配布時に必要</option>
+							<option value="xx">不要</option>
+						</select>
+					</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="ccredit">
+							<option value="oo" selected>必要</option>
+							<option value="xo" id="redist">再配布時に必要</option>
+							<option value="xx">不要</option>
+						</select>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<a href={BASE_URL} id="license">
+		<p class="pt-4 text-center text-4xl font-extrabold">
+			<span id="level"></span>ライセンス
+		</p>
+	</a>
+	<p class="pb-4 text-center">
+		非商用利用レベル: <span id="nl"></span> / 商用利用レベル: <span id="cl"></span>
+	</p>
+
+	<p class="py-4">以下のリンクを素材のライセンス先のリンクとして使用してください</p>
+	<LicenseCopyForm url={BASE_URL} />
+</license-select>
+
+<script>
+	import { BASE_URL } from '@/settings/const';
+	class LicenseSelect extends HTMLElement {
+		private lbit: {
+			[t: string]: {
+				use: string;
+				edit: string;
+				dist: string;
+				credit: string;
+			};
+		} = {
+			n: {
+				use: 'o',
+				edit: 'o',
+				dist: 'o',
+				credit: 'oo',
+			},
+			c: {
+				use: 'o',
+				edit: 'o',
+				dist: 'o',
+				credit: 'oo',
+			},
+		};
+
+		private level = {
+			n: 5,
+			c: 5,
+		};
+
+		private url = `${BASE_URL}/n${this.level.n}c${this.level.c}`;
+
+		constructor() {
+			super();
+			const allselect = this.querySelectorAll('select');
+			allselect.forEach((select) => {
+				select.addEventListener('change', () => {
+					const id = select.id;
+					this.updateLicense(id);
+				});
+			});
+			// 初期値に基づいてコンポーネントを描画
+			this.updateStatus();
+		}
+
+		public updateLicense(id: string) {
+			// 変更されたselectボタンの値をlbitに反映
+			const [type, property] = [id[0], id.slice(1)];
+			this.lbit[type][property] = (this.querySelector(`#${id}`) as HTMLSelectElement).value;
+
+			// lbitの"o" | "x"に応じてdisabledを変更する
+			if (type === 'n' || type === 'c') {
+				this.updateSelectStatus(type);
+				this.updateLevel(type);
+				this.url = `${BASE_URL}/n${this.level.n}c${this.level.c}`;
+				this.updateStatus();
+			}
+		}
+
+		updateSelectStatus = (t: 'n' | 'c') => {
+			const l = this.lbit[t];
+			if (l.use === 'o') {
+				(this.querySelector(`#${t}edit`) as HTMLSelectElement).disabled = false;
+				(this.querySelector(`#${t}dist`) as HTMLSelectElement).disabled = false;
+				(this.querySelector(`#${t}credit`) as HTMLSelectElement).disabled = false;
+			}
+			if (l.edit === 'o') {
+				(this.querySelector(`#${t}dist`) as HTMLSelectElement).disabled = false;
+				(this.querySelector(`#${t}credit > #redist`) as HTMLSelectElement).disabled = false;
+			}
+			if (l.dist === 'o') {
+				(this.querySelector(`#${t}credit > #redist`) as HTMLSelectElement).disabled = false;
+			}
+
+			if (l.use === 'x') {
+				(this.querySelector(`#${t}edit`) as HTMLSelectElement).disabled = true;
+				(this.querySelector(`#${t}dist`) as HTMLSelectElement).disabled = true;
+				(this.querySelector(`#${t}credit`) as HTMLSelectElement).disabled = true;
+			}
+			if (l.edit === 'x') {
+				(this.querySelector(`#${t}dist`) as HTMLSelectElement).disabled = true;
+				(this.querySelector(`#${t}credit > #redist`) as HTMLSelectElement).disabled = true;
+			}
+			if (l.dist === 'x') {
+				(this.querySelector(`#${t}credit > #redist`) as HTMLSelectElement).disabled = true;
+			}
+		};
+		updateLevel = (t: 'n' | 'c') => {
+			this.level[t] = this.detectLevel({ ...this.lbit[t] });
+		};
+
+		private detectLevel = (status: { use: string; edit: string; dist: string; credit: string }) => {
+			if (status.use === 'x') {
+				return 0;
+			} else if (status.edit === 'x') {
+				if (status.credit === 'oo') {
+					return 1;
+				} else {
+					return 2;
+				}
+			} else if (status.dist === 'x') {
+				if (status.credit === 'oo') {
+					return 3;
+				} else {
+					return 4;
+				}
+			} else {
+				if (status.credit === 'oo') {
+					return 5;
+				} else if (status.credit === 'xo') {
+					return 6;
+				} else {
+					return 7;
+				}
+			}
+		};
+
+		updateStatus = () => {
+			(this.querySelector('#level') as HTMLElement).textContent = `N${this.level.n}C${this.level.c}`;
+			(this.querySelector('#nl') as HTMLElement).textContent = this.level.n.toString();
+			(this.querySelector('#cl') as HTMLElement).textContent = this.level.c.toString();
+			(this.querySelector('#license') as HTMLAnchorElement).href = this.url;
+			(this.querySelector('#copyInput') as HTMLInputElement).value = this.url;
+		};
+	}
+
+	customElements.define('license-select', LicenseSelect);
+</script>

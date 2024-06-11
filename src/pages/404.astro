@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@/layouts/Base.astro';
+import Header from '@/components/common/Header.astro';
+import Footer from '@/components/common/Footer.astro';
+import { Image } from 'astro:assets';
+import NotFound from '@/images/404.png';
+---
+
+<BaseLayout title="NotFound - 4CIL" description="お探しのページが見つかりません" path="/404">
+	<Header />
+	<main class="flex min-h-screen flex-col items-center justify-center py-16">
+		<div class="container mx-auto max-w-2xl text-center">
+			<a href="/">
+				<Image src={NotFound} alt="not found" />
+			</a>
+			<h1>404 Not Found</h1>
+			<p>お探しのページが見つかりません。</p>
+			<a href="/" class="link">
+				<p class="p-4">ホームへ</p>
+			</a>
+			<p class="p-2 text-sm">
+				This image is from <a href="https://github.com/SAWARATSUKI/KawaiiLogos" class="link" target="_blank">KawaiiLogos</a>, thank
+				you <a href="https://x.com/sawaratsuki1004" class="link" target="_blank">@sawaratsuki1004</a>!!
+			</p>
+		</div>
+	</main>
+	<Footer />
+</BaseLayout>

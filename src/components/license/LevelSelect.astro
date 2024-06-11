@@ -1,0 +1,72 @@
+<level-select>
+	<div class="flex flex-wrap items-center justify-center gap-2 text-4xl font-extrabold">
+		<span>N</span>
+		<select id="nlevel" class="select">
+			<option value="0" selected>0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+		</select>
+		<span>C</span>
+		<select id="clevel" class="select">
+			<option value="0" selected>0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+		</select>
+		<span>ライセンス</span>
+		<a role="button" class="btn btn-success m-4 text-white" id="link">Go!!</a>
+	</div>
+	<p class="py-2 text-center">
+		非商用利用レベル<span id="nl"></span> : 商用利用レベル<span id="cl"></span>
+	</p>
+</level-select>
+
+<script>
+	class LevelSelect extends HTMLElement {
+		private level = {
+			n: 0,
+			c: 0,
+		};
+
+		private url = `n${this.level.n}c${this.level.c}`;
+
+		constructor() {
+			super();
+			const allselect = this.querySelectorAll('select');
+			allselect.forEach((select) => {
+				select.addEventListener('change', () => {
+					const id = select.id;
+					this.updateLevel(id);
+				});
+			});
+
+			this.updateStatus();
+		}
+
+		public updateLevel(id: string) {
+			const [t] = id.split('');
+			if (t === 'n' || t === 'c') {
+				this.level[t] = parseInt((this.querySelector(`#${id}`) as HTMLSelectElement).value);
+				this.url = `n${this.level.n}c${this.level.c}`;
+				this.updateStatus();
+			}
+		}
+
+		public updateStatus() {
+			(this.querySelector('span#nl') as HTMLElement).innerText = this.level.n.toString();
+			(this.querySelector('span#cl') as HTMLElement).innerText = this.level.c.toString();
+			(this.querySelector('a#link') as HTMLAnchorElement).href = `/${this.url}`;
+		}
+	}
+
+	customElements.define('level-select', LevelSelect);
+</script>

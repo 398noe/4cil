@@ -1,0 +1,55 @@
+---
+import SelectLicense from '@/components/license/LevelSelect.astro';
+import Layout from '@/layouts/Layout.astro';
+import { BASE_URL } from '@/settings/const';
+import { license } from '@/settings/license';
+---
+
+<Layout title="ライセンス一覧 - 4CIL" description="4CILで使えるライセンスの一覧ページです" path="/license" ogp=`${BASE_URL}/license.png`>
+	<div class="p-8 text-center">
+		<h1 class="py-2 text-4xl font-extrabold">ライセンス一覧</h1>
+		<h2 class="py-2">4CILで使用できるライセンス一覧</h2>
+	</div>
+	<hr />
+	<div class="container mx-auto max-w-2xl p-8">
+		<h2 class="py-4 text-2xl font-bold">ライセンス形式</h2>
+		<p>4CILのライセンス形式は以下の4文字の組み合わせで表すことができます</p>
+		<p class="my-8 text-nowrap text-center font-extrabold" style="font-size: clamp(16px, 6vw, 48px);">【N】【0-7】【C】【0-7】</p>
+		<p>1文字目の【N】は Not commercial, 非商用利用向けを意味しています</p>
+		<p>2文字目の【0-7】は非商用利用向けに許可するレベルを意味しています</p>
+		<p>3文字目の【C】は Commercial, 商用利用向けを意味しています</p>
+		<p>4文字目の【0-7】は商用利用向けに許可するレベルを意味しています</p>
+	</div>
+	<div class="container mx-auto max-w-2xl p-8">
+		<h2 class="py-2 text-2xl font-bold">レベル形式</h2>
+		<p class="py-4">レベルは0から7まで存在し、それぞれ以下の意味を示します</p>
+		<div class="overflow-x-auto">
+			<table class="table table-pin-rows table-pin-cols table-xs">
+				<thead>
+					<tr>
+						<th>レベル</th>
+						<th>説明</th>
+					</tr>
+				</thead>
+				<tbody>
+					{
+						Object.values(license).map((l) => {
+							return (
+								<tr>
+									<td class="text-right">{l.level}</td>
+									<td class="text-left">{l.description}</td>
+								</tr>
+							);
+						})
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<hr />
+	<div class="container mx-auto max-w-2xl p-8">
+		<h2 class="py-2 text-2xl font-bold">ライセンスを使用したい!!</h2>
+		<p class="py-4">使用したいライセンスの数字を選んでページに飛んでください</p>
+		<SelectLicense />
+	</div>
+</Layout>

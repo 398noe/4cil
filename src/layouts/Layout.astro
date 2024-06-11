@@ -1,0 +1,21 @@
+---
+import Header from '@/components/common/Header.astro';
+import Base from './Base.astro';
+import Footer from '@/components/common/Footer.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	path: string;
+	ogp?: string;
+}
+const { title, description, path, ogp } = Astro.props;
+---
+
+<Base title={title} description={description} path={path} ogp={ogp}>
+	<Header />
+	<main class="min-h-screen py-16">
+		<slot />
+	</main>
+	<Footer />
+</Base>

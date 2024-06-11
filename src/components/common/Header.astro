@@ -1,0 +1,57 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<header class="navbar fixed top-0 z-50 border-b-2 bg-base-100">
+	<div class="flex-none">
+		<a role="button" class="btn btn-ghost text-xl font-extrabold text-base-content" href="/">4CIL</a>
+	</div>
+	<div class="flex-1"></div>
+	<div class="flex-none gap-x-2">
+		<a role="button" class="btn btn-square btn-ghost" href="/license">
+			<Icon name="mdi:search" class="h-6 w-6" />
+		</a>
+		<a role="button" class="btn btn-square btn-ghost" href="https://github.com/398noe/4cil" target="_blank">
+			<Icon name="mdi:github" class="h-6 w-6" />
+		</a>
+		<label class="btn btn-ghost swap swap-rotate" role="button">
+			<input type="checkbox" id="changeTheme" />
+			<Icon name="mdi:power-sleep" class="swap-off h-6 w-6 text-zinc-900" />
+			<Icon name="mdi:white-balance-sunny" class="swap-on h-6 w-6 text-orange-500" />
+		</label>
+	</div>
+</header>
+
+<script>
+	const changeButton = document.getElementById('changeTheme') as HTMLInputElement;
+	const isdark = JSON.parse(localStorage.getItem('isdark'));
+	if (isdark) {
+		// 現在darkmodeなら, このvalueには次に切り替える値を入れる
+		changeButton.value = 'corporate';
+		changeButton.checked = true;
+	} else {
+		changeButton.value = 'business';
+		changeButton.checked = false;
+	}
+
+	changeButton.addEventListener('change', changeTheme);
+
+	function changeTheme() {
+		// 最新の値を取得
+		let isdark = JSON.parse(localStorage.getItem('isdark'));
+		isdark = !isdark;
+
+		const nowtheme = document.documentElement.getAttribute('data-theme');
+		const newtheme = changeButton.value;
+		document.documentElement.setAttribute('data-theme', newtheme);
+		changeButton.value = nowtheme;
+
+		if (isdark) {
+			changeButton.checked = true;
+		} else {
+			changeButton.checked = false;
+		}
+
+		localStorage.setItem('isdark', JSON.stringify(isdark));
+	}
+</script>
