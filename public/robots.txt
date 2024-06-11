@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://4cil.nyao.me/sitemap-index.xml
