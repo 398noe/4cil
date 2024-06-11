@@ -9,5 +9,6 @@ export default {
 	],
 	daisyui: {
 		themes: ["corporate", "business"]
-	}
+	},
+	darkMode: ["class", "[data-theme='business']"]
 }
