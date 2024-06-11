@@ -1,0 +1,265 @@
+---
+import { BASE_URL } from '@/settings/const';
+import CopyButton from './CopyButton.astro';
+---
+
+<license-selector>
+	<div class="flex justify-center overflow-x-auto py-8">
+		<table class="table table-pin-rows table-pin-cols table-xs max-w-2xl md:table-md">
+			<thead>
+				<tr>
+					<th></th>
+					<th>非商用利用</th>
+					<th>商用利用</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>使用</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="nuse">
+							<option value="o">許可</option>
+							<option value="x">禁止</option>
+						</select>
+					</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="cuse">
+							<option value="o">許可</option>
+							<option value="x">禁止</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>加工改変</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="nedit">
+							<option value="o">許可</option>
+							<option value="x">禁止</option>
+						</select>
+					</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="cedit">
+							<option value="o">許可</option>
+							<option value="x">禁止</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>再配布</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="ndist">
+							<option value="o">許可</option>
+							<option value="x">禁止</option>
+						</select>
+					</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="cdist">
+							<option value="o">許可</option>
+							<option value="x">禁止</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>クレジット表記</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="ncredit">
+							<option value="oo">必要</option>
+							<option value="xo" id="redist">再配布時に必要</option>
+							<option value="xx">不要</option>
+						</select>
+					</td>
+					<td>
+						<select class="select select-xs w-full max-w-48 md:select-md" id="ccredit">
+							<option value="oo">必要</option>
+							<option value="xo" id="redist">再配布時に必要</option>
+							<option value="xx">不要</option>
+						</select>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<a href={BASE_URL + '/n5c5'} id="license">
+		<p class="pt-4 text-center text-4xl font-extrabold">
+			<span id="level">N5C5</span>ライセンス
+		</p>
+	</a>
+	<p class="pb-4 text-center">
+		非商用利用レベル: <span id="nlevel">5</span> / 商用利用レベル: <span id="clevel">5</span>
+	</p>
+
+	<p class="py-4">以下のリンクを素材のライセンス先のリンクとして使用してください</p>
+	<CopyButton url={BASE_URL + '/n5c5'} />
+</license-selector>
+
+<script>
+	import { BASE_URL } from '@/settings/const';
+	class LicenseSelector extends HTMLElement {
+		private lbit = {
+			n: {
+				use: 'o',
+				edit: 'o',
+				dist: 'o',
+				credit: 'oo',
+			},
+			c: {
+				use: 'o',
+				edit: 'o',
+				dist: 'o',
+				credit: 'oo',
+			},
+		};
+
+		private level = {
+			n: 0,
+			c: 0,
+		};
+
+		private url = `${BASE_URL}/license?n=${this.level.n}&c=${this.level.c}`;
+		private copyButton = document.getElementById('copyButton');
+
+		constructor() {
+			super();
+			const allselect = this.querySelectorAll('select');
+			allselect.forEach((select) => {
+				select.addEventListener('change', this.updateLicense.bind(this));
+			});
+		}
+
+		public updateLicense() {
+			const nuse = (this.querySelector('#nuse') as HTMLSelectElement).value;
+			const nedit = (this.querySelector('#nedit') as HTMLSelectElement).value;
+			const ndist = (this.querySelector('#ndist') as HTMLSelectElement).value;
+			const ncredit = (this.querySelector('#ncredit') as HTMLSelectElement).value;
+			const cuse = (this.querySelector('#cuse') as HTMLSelectElement).value;
+			const cedit = (this.querySelector('#cedit') as HTMLSelectElement).value;
+			const cdist = (this.querySelector('#cdist') as HTMLSelectElement).value;
+			const ccredit = (this.querySelector('#ccredit') as HTMLSelectElement).value;
+
+			this.lbit = {
+				n: {
+					use: nuse,
+					edit: nedit,
+					dist: ndist,
+					credit: ncredit,
+				},
+				c: {
+					use: cuse,
+					edit: cedit,
+					dist: cdist,
+					credit: ccredit,
+				},
+			};
+			this.updateLevel();
+
+			console.log(this.lbit);
+			console.log(this.level);
+
+			// lbitの"o" | "x"に応じてselectのdisabledを変更
+			if (this.lbit.c.use === 'o') {
+				(this.querySelector('#cedit') as HTMLSelectElement).disabled = false;
+				(this.querySelector('#cdist') as HTMLSelectElement).disabled = false;
+				(this.querySelector('#ccredit') as HTMLSelectElement).disabled = false;
+			}
+			if (this.lbit.c.edit === 'o') {
+				(this.querySelector('#cdist') as HTMLSelectElement).disabled = false;
+				(this.querySelector('#ccredit > #redist') as HTMLSelectElement).disabled = false;
+			}
+			if (this.lbit.c.dist === 'o') {
+				(this.querySelector('#ccredit > #redist') as HTMLSelectElement).disabled = false;
+			}
+
+			if (this.lbit.c.use === 'x') {
+				(this.querySelector('#cedit') as HTMLSelectElement).disabled = true;
+				(this.querySelector('#cdist') as HTMLSelectElement).disabled = true;
+				(this.querySelector('#ccredit') as HTMLSelectElement).disabled = true;
+			}
+			if (this.lbit.c.edit === 'x') {
+				(this.querySelector('#cdist') as HTMLSelectElement).disabled = true;
+				(this.querySelector('#ccredit > #redist') as HTMLSelectElement).disabled = true;
+			}
+			if (this.lbit.c.dist === 'x') {
+				(this.querySelector('#ccredit > #redist') as HTMLSelectElement).disabled = true;
+			}
+
+			// this.lbit.n に対しても同様の処理
+			if (this.lbit.n.use === 'o') {
+				(this.querySelector('#nedit') as HTMLSelectElement).disabled = false;
+				(this.querySelector('#ndist') as HTMLSelectElement).disabled = false;
+				(this.querySelector('#ncredit') as HTMLSelectElement).disabled = false;
+			}
+			if (this.lbit.n.edit === 'o') {
+				(this.querySelector('#ndist') as HTMLSelectElement).disabled = false;
+				(this.querySelector('#ncredit > #redist') as HTMLSelectElement).disabled = false;
+			}
+			if (this.lbit.n.dist === 'o') {
+				(this.querySelector('#ncredit > #redist') as HTMLSelectElement).disabled = false;
+			}
+
+			if (this.lbit.n.use === 'x') {
+				(this.querySelector('#nedit') as HTMLSelectElement).disabled = true;
+				(this.querySelector('#ndist') as HTMLSelectElement).disabled = true;
+				(this.querySelector('#ncredit') as HTMLSelectElement).disabled = true;
+			}
+			if (this.lbit.n.edit === 'x') {
+				(this.querySelector('#ndist') as HTMLSelectElement).disabled = true;
+				(this.querySelector('#ncredit > #redist') as HTMLSelectElement).disabled = true;
+			}
+			if (this.lbit.n.dist === 'x') {
+				(this.querySelector('#ncredit > #redist') as HTMLSelectElement).disabled = true;
+			}
+
+			this.updateURL();
+
+			(this.querySelector('#level') as HTMLElement).textContent = `N${this.level.n}C${this.level.c}`;
+			(this.querySelector('#nlevel') as HTMLElement).textContent = this.level.n.toString();
+			(this.querySelector('#clevel') as HTMLElement).textContent = this.level.c.toString();
+			(this.querySelector('#license') as HTMLAnchorElement).href = this.url;
+		}
+
+		public updateLevel = () => {
+			// lbitからライセンスレベルを取得
+			const n = this.lbit.n;
+			const c = this.lbit.c;
+
+			this.level.n = this.levelSelect(n.use, n.edit, n.dist, n.credit);
+			this.level.c = this.levelSelect(c.use, c.edit, c.dist, c.credit);
+		};
+
+		private levelSelect = (use: string, edit: string, dist: string, credit: string) => {
+			if (use === 'x') {
+				return 0;
+			} else if (edit === 'x') {
+				if (credit === 'oo') {
+					return 1;
+				} else {
+					return 2;
+				}
+			} else if (dist === 'x') {
+				if (credit === 'oo') {
+					return 3;
+				} else {
+					return 4;
+				}
+			} else {
+				if (credit === 'oo') {
+					return 5;
+				} else if (credit === 'xo') {
+					return 6;
+				} else {
+					return 7;
+				}
+			}
+		};
+
+		public updateURL = () => {
+			this.url = `${BASE_URL}/n${this.level.n}c${this.level.c}`;
+
+			const copyInputElement = this.querySelector('#copyInput') as HTMLInputElement;
+			copyInputElement.value = this.url;
+		};
+	}
+
+	customElements.define('license-selector', LicenseSelector);
+</script>
