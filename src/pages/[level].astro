@@ -1,4 +1,5 @@
 ---
+import CopyButton from '@/components/CopyButton.astro';
 import Layout from '@/layouts/Layout.astro';
 import { BASE_URL } from '@/settings/const';
 import { license, getCreditMessage } from '@/settings/license';
@@ -90,33 +91,6 @@ const copylink = BASE_URL + '/' + level;
 	<div class="container mx-auto max-w-2xl p-8">
 		<h2 class="py-4 text-2xl font-extrabold">このライセンスを使用したい!!</h2>
 		<p class="pb-4">以下のリンクを素材のライセンス先のリンクとして使用してください</p>
-		<label class="input input-bordered relative flex items-center gap-2">
-			<input id="copyInput" type="text" class="grow" value={copylink} readonly />
-			<button id="copyButton" class="btn btn-sm absolute right-2 hover:btn-success hover:text-white">COPY</button>
-		</label>
+		<CopyButton url={copylink} />
 	</div>
 </Layout>
-
-<script>
-	const copyButton = document.getElementById('copyButton');
-	copyButton.addEventListener('click', async () => {
-		await copyToClipboard();
-	});
-
-	async function copyToClipboard() {
-		const copyInputElement = document.getElementById('copyInput') as HTMLInputElement;
-		const url = copyInputElement.value;
-		await navigator.clipboard.writeText(url);
-
-		copyButton.innerText = 'COPIED!';
-		copyButton.classList.add('btn-success');
-		copyButton.classList.add('text-white');
-		console.log('Copied to clipboard: ' + url);
-
-		setTimeout(() => {
-			copyButton.innerText = 'COPY';
-			copyButton.classList.remove('btn-success');
-			copyButton.classList.remove('text-white');
-		}, 2000);
-	}
-</script>
