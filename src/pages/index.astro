@@ -1,5 +1,6 @@
 ---
 import Feature from '@/components/Feature.astro';
+import SelectLicense from '@/components/SelectLicense.astro';
 import Layout from '@/layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 ---
@@ -13,8 +14,8 @@ import { Icon } from 'astro-icon/components';
 				<p class="text-xl">4CILは著作物の利用規約をすぐに意思表明できるサービスです</p>
 			</div>
 			<div class="flex w-full flex-col gap-4 md:flex-row">
-				<button class="btn btn-info text-lg text-white">使ってみる<Icon name="mdi:cursor-default" class="h-5 w-5" /></button>
-				<button class="btn btn-success text-lg text-white">ライセンス一覧<Icon name="mdi:search" class="h-5 w-5" /></button>
+				<a class="btn btn-info text-lg text-white" href="#try">使ってみる<Icon name="mdi:cursor-default" class="h-5 w-5" /></a>
+				<a class="btn btn-success text-lg text-white" href="/license">ライセンス一覧<Icon name="mdi:search" class="h-5 w-5" /></a>
 			</div>
 		</div>
 	</div>
@@ -53,8 +54,9 @@ import { Icon } from 'astro-icon/components';
 			/>
 		</div>
 	</div>
-	<div class="container mx-auto flex max-w-5xl flex-col gap-4 p-8">
+	<div class="container mx-auto flex max-w-5xl flex-col gap-4 p-8" id="try">
 		<h2 class="text-4xl font-extrabold">Let's TRY</h2>
-		<h3 class="text-2xl">以下の選択肢を選んで、リンクを生成しましょう!!</h3>
+		<h3 class="text-2xl">以下の選択肢を選んでリンクを生成しましょう!!</h3>
+		<SelectLicense />
 	</div>
 </Layout>
