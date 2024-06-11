@@ -32,7 +32,7 @@ export async function GET({ url, params, props }: APIContext): Promise<Response>
 	return new Response(image, {
 		headers: {
 			'Content-Type': 'image/png',
-			// 'Cache-Control': 'public, max-age=604800', // should be add immutable
+			'Cache-Control': 'public, max-age=604800, immutable', // should be add immutable
 		},
 	});
 }
