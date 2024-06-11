@@ -3,7 +3,7 @@
 
 4CILは著作物の利用規約をすぐに意思表明できるサービスです
 
-[https://4cil.vercel.app](https://4cil.vercel.app)
+[https://4cil.nyao.me](https://4cil.nyao.me)
 
 ## About
 
@@ -27,13 +27,9 @@
 
   4CILはライセンスの種類をURLで提供します。これによって、従来の利用規約よりも柔軟に、素材ごとにライセンスの種類を意思表明することができます
 
-
-##### 注意事項
-
-###### ※これは @398noe がお勉強のために作ったサイトだよ…！法的な拘束力はないかもしれないけど、みんなの創作物への意思表明が簡単になったらいいな…！
+##### License
+- 404 Not Found image is from [KawaiiLogos](https://github.com/SAWARATSUKI/KawaiiLogos), thank you @SAWARATSUKI !!
 
 ---
 
-4 Character Internet License Project © 2022 - 2024
-
-All rights reserved by @398noe
+4 Character Internet License Project &copy; 2022 - 2024 / Created by @398noe
