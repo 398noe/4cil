@@ -5,3 +5,4 @@
 *.pem
 .env*.local
 *.tsbuildinfo
+/dist
