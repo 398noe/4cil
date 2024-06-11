@@ -1,4 +1,4 @@
-<select-license>
+<level-select>
 	<div class="flex flex-wrap items-center justify-center gap-2 text-4xl font-extrabold">
 		<span>N</span>
 		<select name="nlevel" id="nlevel" class="select">
@@ -28,10 +28,10 @@
 	<p class="py-2 text-center">
 		非商用利用レベル<span id="nl">0</span> : 商用利用レベル<span id="cl">0</span>
 	</p>
-</select-license>
+</level-select>
 
 <script>
-	class SelectLicense extends HTMLElement {
+	class LevelSelect extends HTMLElement {
 		private level = {
 			n: 0,
 			c: 0,
@@ -65,5 +65,5 @@
 		}
 	}
 
-	customElements.define('select-license', SelectLicense);
+	customElements.define('level-select', LevelSelect);
 </script>

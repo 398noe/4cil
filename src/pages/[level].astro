@@ -1,5 +1,5 @@
 ---
-import CopyButton from '@/components/CopyButton.astro';
+import LicenseCopyForm from '@/components/license/LicenseCopyForm.astro';
 import Layout from '@/layouts/Layout.astro';
 import { BASE_URL } from '@/settings/const';
 import { license, getCreditMessage } from '@/settings/license';
@@ -91,6 +91,6 @@ const copylink = BASE_URL + '/' + level;
 	<div class="container mx-auto max-w-2xl p-8">
 		<h2 class="py-4 text-2xl font-extrabold">このライセンスを使用したい!!</h2>
 		<p class="pb-4">以下のリンクを素材のライセンス先のリンクとして使用してください</p>
-		<CopyButton url={copylink} />
+		<LicenseCopyForm url={copylink} />
 	</div>
 </Layout>

@@ -1,9 +1,9 @@
 ---
 import { BASE_URL } from '@/settings/const';
-import CopyButton from './CopyButton.astro';
+import LicenseCopyForm from './LicenseCopyForm.astro';
 ---
 
-<index-license>
+<license-select>
 	<div class="flex justify-center overflow-x-auto py-8">
 		<table class="table table-pin-rows table-pin-cols table-xs max-w-2xl md:table-md">
 			<thead>
@@ -90,12 +90,12 @@ import CopyButton from './CopyButton.astro';
 	</p>
 
 	<p class="py-4">以下のリンクを素材のライセンス先のリンクとして使用してください</p>
-	<CopyButton url={BASE_URL + '/n5c5'} />
-</index-license>
+	<LicenseCopyForm url={BASE_URL + '/n5c5'} />
+</license-select>
 
 <script>
 	import { BASE_URL } from '@/settings/const';
-	class IndexLicense extends HTMLElement {
+	class LicenseSelect extends HTMLElement {
 		private lbit = {
 			n: {
 				use: 'o',
@@ -117,7 +117,6 @@ import CopyButton from './CopyButton.astro';
 		};
 
 		private url = `${BASE_URL}/license?n=${this.level.n}&c=${this.level.c}`;
-		private copyButton = document.getElementById('copyButton');
 
 		constructor() {
 			super();
@@ -261,5 +260,5 @@ import CopyButton from './CopyButton.astro';
 		};
 	}
 
-	customElements.define('index-license', IndexLicense);
+	customElements.define('license-select', LicenseSelect);
 </script>
