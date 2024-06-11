@@ -61,7 +61,7 @@ async function generateImage(n: number, c: number) {
 function generateHTML(n: number, c: number) {
 	const level = 'n' + n + 'c' + c;
 	return html(`
-        <div class="flex flex-col w-full p-4 bg-white" lang="ja-JP">
+        <div class="flex flex-col w-full h-full p-4 bg-white" lang="ja-JP">
             <div class="flex flex-col items-center w-full p-4">
                 <h1 class="text-6xl m-4">${level.toUpperCase()}ライセンス</h1>
         		<h2 class="text-2xl m-4">非商用利用レベル${n} : 商用利用レベル${c}</h2>
