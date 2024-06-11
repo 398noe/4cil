@@ -1,7 +1,7 @@
 <level-select>
 	<div class="flex flex-wrap items-center justify-center gap-2 text-4xl font-extrabold">
 		<span>N</span>
-		<select name="nlevel" id="nlevel" class="select">
+		<select id="nlevel" class="select">
 			<option value="0" selected>0</option>
 			<option value="1">1</option>
 			<option value="2">2</option>
@@ -12,7 +12,7 @@
 			<option value="7">7</option>
 		</select>
 		<span>C</span>
-		<select name="clevel" id="clevel" class="select">
+		<select id="clevel" class="select">
 			<option value="0" selected>0</option>
 			<option value="1">1</option>
 			<option value="2">2</option>
@@ -23,10 +23,10 @@
 			<option value="7">7</option>
 		</select>
 		<span>ライセンス</span>
-		<a role="button" class="btn btn-success m-4 text-white" id="link" href="/n0c0">Go!!</a>
+		<a role="button" class="btn btn-success m-4 text-white" id="link">Go!!</a>
 	</div>
 	<p class="py-2 text-center">
-		非商用利用レベル<span id="nl">0</span> : 商用利用レベル<span id="cl">0</span>
+		非商用利用レベル<span id="nl"></span> : 商用利用レベル<span id="cl"></span>
 	</p>
 </level-select>
 
@@ -43,24 +43,27 @@
 			super();
 			const allselect = this.querySelectorAll('select');
 			allselect.forEach((select) => {
-				select.addEventListener('change', this.updateLevel.bind(this));
+				select.addEventListener('change', () => {
+					const id = select.id;
+					this.updateLevel(id);
+				});
 			});
+
+			this.updateStatus();
 		}
 
-		public updateLevel() {
-			const nlevel = (this.querySelector('#nlevel') as HTMLSelectElement).value;
-			const clevel = (this.querySelector('#clevel') as HTMLSelectElement).value;
+		public updateLevel(id: string) {
+			const [t] = id.split('');
+			if (t === 'n' || t === 'c') {
+				this.level[t] = parseInt((this.querySelector(`#${id}`) as HTMLSelectElement).value);
+				this.url = `n${this.level.n}c${this.level.c}`;
+				this.updateStatus();
+			}
+		}
 
-			this.level = {
-				n: parseInt(nlevel),
-				c: parseInt(clevel),
-			};
-
-			this.url = `n${this.level.n}c${this.level.c}`;
-
+		public updateStatus() {
 			(this.querySelector('span#nl') as HTMLElement).innerText = this.level.n.toString();
 			(this.querySelector('span#cl') as HTMLElement).innerText = this.level.c.toString();
-
 			(this.querySelector('a#link') as HTMLAnchorElement).href = `/${this.url}`;
 		}
 	}
